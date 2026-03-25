@@ -41,30 +41,35 @@ Each table lists the wrapper/group name, a short English description, a short Pe
 
 | Wrapper / Methods | English (short) | فارسی (کوتاه) | Source file(s) | Example (see below) |
 |---|---|---|---|---|
-| `RunAsync<T>(Func<CancellationToken, Task<T>>)` | Runs an async task that returns a result; scheduled with priority. | اجرای تسک ناهمگام با مقدار خروجی و زمان‌بندی براساس اولویت. | `TaskManager/TaskManager - API.cs` | [Example](#tm-runasync-t) |
-| `RunAsync(Func<CancellationToken, Task>)` | Runs an async task without result (fire-and-forget or awaited). | اجرای تسک ناهمگام بدون خروجی (Fire-and-forget یا با await). | `TaskManager/TaskManager - API.cs` | [Example](#tm-runasync) |
-| `RunSyncAsAsync<T>(Func<T>)` | Converts a synchronous function into a scheduled async task returning a value. | تبدیل تابع همگام به تسک ناهمگام و بازگرداندن مقدار. | `TaskManager/TaskManager - API.cs` | [Example](#tm-runsyncasasync-t) |
-| `RunSyncAsAsync(Action)` | Converts a synchronous Action into a scheduled async task (no result). | تبدیل اکشن همگام به تسک ناهمگام بدون خروجی. | `TaskManager/TaskManager - API.cs` | [Example](#tm-runsyncasasync) |
-| `SetThreadsCountByPercen(eThreadUsagePercent)` | Configure thread pool usage based on CPU percentage for adaptive scaling. | تعیین میزان استفاده از رشته‌ها بر اساس درصد مصرف CPU. | `TaskManager/TaskManager - API.cs` | [Example](#tm-setthreads-bypercent) |
-| `SetThreadsCountByCore(int)` | Set worker thread count based on CPU core count. | تنظیم تعداد رشته‌ها بر اساس تعداد هسته‌ها. | `TaskManager/TaskManager - API.cs` | [Example](#tm-setthreads-bycore) |
-| `SetThreadsCountByThreads(int)` | Set exact number of worker threads. | تنظیم دقیق تعداد رشته‌های کاری. | `TaskManager/TaskManager - API.cs` | [Example](#tm-setthreads-bythreads) |
-| `ShutdownNeraToolImmediate()` | Immediately cancel all tasks and stop the engine. | خاموش‌سازی فوری موتور و کنسل‌کردن همه تسک‌ها. | `TaskManager/TaskManager - API.cs` | [Example](#tm-shutdown-immediate) |
-| `ShutdownNeraToolGracefulAsync(int)` | Graceful shutdown: wait for running/queued tasks to finish (optional timeout). | خاموش‌سازی تدریجی با امکان تعیین زمان انتظار برای اتمام تسک‌ها. | `TaskManager/TaskManager - API.cs` | [Example](#tm-shutdown-graceful) |
-| `GetRunningTaskCount()` | Returns number of currently running tasks. | تعداد تسک‌های درحال اجرا را برمی‌گرداند. | `TaskManager/TaskManager - API.cs` | [Example](#tm-getrunningcount) |
-| `TaskMonitor(bool, int, CancellationToken)` | Start/stop console task monitor with refresh interval. | شروع/توقف نمایشگر کنسول تسک‌ها با نرخ به‌روزرسانی. | `TaskManager/TaskManager - API.cs` | [Example](#tm-taskmonitor) |
-| `SetDelayTimeMilliseconds(int activeMs, int idleMs, int maxIdleMs)` | Configure scheduler delays in milliseconds for active/idle states. | تنظیم تاخیر زمان‌بندی‌کننده به میلی‌ثانیه برای حالات فعال و بیکاری. | `TaskManager/TaskManager - API.cs` | [Example](#tm-setdelay-ms) |
-| `SetDelayTimeSeconds(int activeSec, int idleSec, int maxIdleSec)` | Configure scheduler delays in seconds (wrapper over ms method). | تنظیم تاخیر زمان‌بندی‌کننده به ثانیه (شبه‌رپ) بر پایه متد میلی‌ثانیه. | `TaskManager/TaskManager - API.cs` | [Example](#tm-setdelay-sec) |
+| `RunAsync<T>(Func<CancellationToken, Task<T>>)` | Runs an async task that returns a result; scheduled with priority. | اجرای تسک ناهمگام با مقدار خروجی و زمان‌بندی براساس اولویت. | `TaskManager/TaskManager - API.cs` | [Example ](#tm-runasync-t) [#TME1] |
+| `RunAsync(Func<CancellationToken, Task>)` | Runs an async task without result (fire-and-forget or awaited). | اجرای تسک ناهمگام بدون خروجی (Fire-and-forget یا با await). | `TaskManager/TaskManager - API.cs` | [Example](#tm-runasync)  [#TME2] |
+| `RunSyncAsAsync<T>(Func<T>)` | Converts a synchronous function into a scheduled async task returning a value. | تبدیل تابع همگام به تسک ناهمگام و بازگرداندن مقدار. | `TaskManager/TaskManager - API.cs` | [Example](#tm-runsyncasasync-t)  [#TME3]|
+| `RunSyncAsAsync(Action)` | Converts a synchronous Action into a scheduled async task (no result). | تبدیل اکشن همگام به تسک ناهمگام بدون خروجی. | `TaskManager/TaskManager - API.cs` | [Example](#tm-runsyncasasync) [#TME4]|
+| `SetThreadsCountByPercen(eThreadUsagePercent)` | Configure thread pool usage based on CPU percentage for adaptive scaling. | تعیین میزان استفاده از رشته‌ها بر اساس درصد مصرف CPU. | `TaskManager/TaskManager - API.cs` | [Example](#tm-setthreads-bypercent)  [#TME5]|
+| `SetThreadsCountByCore(int)` | Set worker thread count based on CPU core count. | تنظیم تعداد رشته‌ها بر اساس تعداد هسته‌ها. | `TaskManager/TaskManager - API.cs` | [Example](#tm-setthreads-bycore)  [#TME6] |
+| `SetThreadsCountByThreads(int)` | Set exact number of worker threads. | تنظیم دقیق تعداد رشته‌های کاری. | `TaskManager/TaskManager - API.cs` | [Example](#tm-setthreads-bythreads) [#TME7] | 
+| `ShutdownNeraToolImmediate()` | Immediately cancel all tasks and stop the engine. | خاموش‌سازی فوری موتور و کنسل‌کردن همه تسک‌ها. | `TaskManager/TaskManager - API.cs` | [Example](#tm-shutdown-immediate) [#TME8]|
+| `ShutdownNeraToolGracefulAsync(int)` | Graceful shutdown: wait for running/queued tasks to finish (optional timeout). | خاموش‌سازی تدریجی با امکان تعیین زمان انتظار برای اتمام تسک‌ها. | `TaskManager/TaskManager - API.cs` | [Example](#tm-shutdown-graceful) [#TME9]|
+| `GetRunningTaskCount()` | Returns number of currently running tasks. | تعداد تسک‌های درحال اجرا را برمی‌گرداند. | `TaskManager/TaskManager - API.cs` | [Example](#tm-getrunningcount) [#TME10] |
+| `TaskMonitor(bool, int, CancellationToken)` | Start/stop console task monitor with refresh interval. | شروع/توقف نمایشگر کنسول تسک‌ها با نرخ به‌روزرسانی. | `TaskManager/TaskManager - API.cs` | [Example](#tm-taskmonitor)  [#TME11] |
+| `SetDelayTimeMilliseconds(int activeMs, int idleMs, int maxIdleMs)` | Configure scheduler delays in milliseconds for active/idle states. | تنظیم تاخیر زمان‌بندی‌کننده به میلی‌ثانیه برای حالات فعال و بیکاری. | `TaskManager/TaskManager - API.cs` | [Example](#tm-setdelay-ms) [#TME12]|
+| `SetDelayTimeSeconds(int activeSec, int idleSec, int maxIdleSec)` | Configure scheduler delays in seconds (wrapper over ms method). | تنظیم تاخیر زمان‌بندی‌کننده به ثانیه (شبه‌رپ) بر پایه متد میلی‌ثانیه. | `TaskManager/TaskManager - API.cs` | [Example](#tm-setdelay-sec) [#TME13]|
 
 ---
 
  
 ## Logger / LogManager (Logging wrappers)
 
-| Wrapper / Methods | English (short) | فارسی (کوتاه) | Source file(s) |
-|---|---|---|---|
-| `log`, `logForThisTool` | Log messages with categories and types. | ثبت پیام‌های لاگ با دسته‌بندی و نوع. | `LogManager/Logging - API.cs`, `Logging - Core.cs` |
-| `writeLogInConsole`, `writeLogInUi`, `writeLogInJsonFile`, `writeLogInTextFile` | Configure logging targets (console, UI, JSON, text). | تنظیم مقصدهای خروجی لاگ (کنسول، UI، JSON، متنی). | `LogManager/Logging - API.cs`, `DTOs.cs` |
-| `AutoOfflinetion`, `DisableLoggerSystem` | Toggle offline mode and disable logger. | فعال/غیرفعال کردن حالت آفلاین و غیرفعال‌سازی لاگر. | `LogManager/Logging - API.cs` |
+| Wrapper / Methods | English (short) | فارسی (کوتاه) | Source file(s) | Example (see below) |
+|---|---|---|---|---|
+| `log` | Log a message to the user's application log (category: UsearApplicationLog). | ثبت پیام در لاگ برنامهٔ کاربر (دسته: UsearApplicationLog). | `LogManager/Logging - API.cs` | [Example](#lm-log) [#LME1] |
+| `logForThisTool` | Log a framework/internal message (category: FrameworkLog). | ثبت پیام داخلی/فریم‌ورک (دسته: FrameworkLog). | `LogManager/Logging - API.cs` | [Example](#lm-logForThisTool) [#LME2] |
+| `writeLogInConsole(bool isEnable = true)` | Enable/disable console logging. | فعال/غیرفعال‌سازی لاگ در کنسول. | `LogManager/Logging - API.cs` | [Example](#lm-writeConsole) [#LME3] |
+| `writeLogInUi(bool isEnable = true)` | Enable/disable UI logging (for UI panels). | فعال/غیرفعال‌سازی لاگ در رابط کاربری (UI). | `LogManager/Logging - API.cs` | [Example](#lm-writeUi) [#LME4] |
+| `writeLogInJsonFile(bool isEnable = true, string saveLocation = null, string fileName = "Log")` | Enable JSON file logging and set location/name. | فعال‌سازی لاگ در فایل JSON و تعیین مسیر/نام فایل. | `LogManager/Logging - API.cs` | [Example](#lm-writeJson) [#LME5] |
+| `writeLogInTextFile(bool isEnable = true, string saveLocation = null, string fileName = "Log")` | Enable text file logging and set location/name. | فعال‌سازی لاگ در فایل متنی و تعیین مسیر/نام فایل. | `LogManager/Logging - API.cs` | [Example](#lm-writeText) [#LME6] |
+| `AutoOfflinetion(bool isEnable = true)` | Enable/disable automatic offline mode (default: enabled). | فعال/غیرفعال‌سازی حالت آفلاین خودکار (پیش‌فرض: فعال). | `LogManager/Logging - API.cs` | [Example](#lm-autoOffline) [#LME7] |
+| `DisableLoggerSystem()` | Immediately disable logger system and cancel internal operations. | غیرفعال‌سازی فوری سیستم لاگر و کنسل‌کردن عملیات داخلی. | `LogManager/Logging - API.cs` | [Example](#lm-disable) [#LME8] |
 
 ---
 
@@ -106,7 +111,7 @@ If you want, I can expand this single README into per-project README files with 
  
 <a id="tm-runasync-t"></a>
 <details>
-  <summary>Run an async task that returns a value</summary>
+  <summary>[#TME1] Run an async task that returns a value</summary>
   - Run an async task that returns a value (await and get result). Use priority and cancellation:
 
   ```csharp
@@ -131,7 +136,7 @@ If you want, I can expand this single README into per-project README files with 
 
 <a id="tm-runasync"></a>
 <details>
-  <summary>Run an async task without result</summary>
+  <summary>[#TME2] Run an async task without result</summary>
   - Run an async task without result (fire-and-forget) and await it if needed:
 
   ```csharp
@@ -153,7 +158,7 @@ If you want, I can expand this single README into per-project README files with 
 
 <a id="tm-runsyncasasync-t"></a>
 <details>
-  <summary>Convert a synchronous function to async with result</summary>
+  <summary>[#TME3] Convert a synchronous function to async with result</summary>
   - Convert a CPU-bound synchronous function to an async task and await the result:
 
   ```csharp
@@ -174,7 +179,7 @@ If you want, I can expand this single README into per-project README files with 
 
 <a id="tm-runsyncasasync"></a>
 <details>
-  <summary>Run a synchronous action as background task</summary>
+  <summary>[#TME4] Run a synchronous action as background task</summary>
   - Run a synchronous action as a background task (fire-and-forget):
 
   ```csharp
@@ -186,7 +191,7 @@ If you want, I can expand this single README into per-project README files with 
 
 <a id="tm-setthreads-bypercent"></a>
 <details>
-  <summary>Set thread pool usage by CPU percentage</summary>
+  <summary>[#TME5] Set thread pool usage by CPU percentage</summary>
   - Set thread pool usage by CPU percentage (example uses predefined enum value):
 
   ```csharp
@@ -197,7 +202,7 @@ If you want, I can expand this single README into per-project README files with 
 
 <a id="tm-setthreads-bycore"></a>
 <details>
-  <summary>Set threads count based on CPU cores</summary>
+  <summary>[#TME6] Set threads count based on CPU cores</summary>
   - Set threads count based on CPU cores:
 
   ```csharp
@@ -208,7 +213,7 @@ If you want, I can expand this single README into per-project README files with 
 
 <a id="tm-setthreads-bythreads"></a>
 <details>
-  <summary>Set exact number of worker threads</summary>
+  <summary>[#TME7] Set exact number of worker threads</summary>
   - Set exact number of worker threads:
 
   ```csharp
@@ -218,7 +223,7 @@ If you want, I can expand this single README into per-project README files with 
 
 <a id="tm-shutdown-immediate"></a>
 <details>
-  <summary>Immediate shutdown and cancel tasks</summary>
+  <summary>[#TME8] Immediate shutdown and cancel tasks</summary>
   - Immediate shutdown and cancel all running tasks:
 
   ```csharp
@@ -228,7 +233,7 @@ If you want, I can expand this single README into per-project README files with 
 
 <a id="tm-shutdown-graceful"></a>
 <details>
-  <summary>Graceful shutdown with timeout</summary>
+  <summary>[#TME9] Graceful shutdown with timeout</summary>
   - Graceful shutdown with timeout in seconds (waits up to given seconds):
 
   ```csharp
@@ -239,7 +244,7 @@ If you want, I can expand this single README into per-project README files with 
 
 <a id="tm-getrunningcount"></a>
 <details>
-  <summary>Get running task count</summary>
+  <summary>[#TME10] Get running task count</summary>
   - Get number of currently running tasks:
 
   ```csharp
@@ -250,7 +255,7 @@ If you want, I can expand this single README into per-project README files with 
 
 <a id="tm-taskmonitor"></a>
 <details>
-  <summary>Start/stop the console task monitor</summary>
+  <summary>[#TME11] Start/stop the console task monitor</summary>
   - Start and stop the console task monitor. The boolean parameter indicates start(true)/stop(false).
 
   ```csharp
@@ -268,7 +273,7 @@ If you want, I can expand this single README into per-project README files with 
 
 <a id="tm-setdelay-ms"></a>
 <details>
-  <summary>Configure scheduler delays (ms)</summary>
+  <summary>[#TME12] Configure scheduler delays (ms)</summary>
   - Configure scheduler delays in milliseconds:
 
   ```csharp
@@ -279,12 +284,99 @@ If you want, I can expand this single README into per-project README files with 
 
 <a id="tm-setdelay-sec"></a>
 <details>
-  <summary>Configure scheduler delays (sec)</summary>
+  <summary>[#TME13] Configure scheduler delays (sec)</summary>
   - Configure scheduler delays in seconds (wrapper over ms method):
 
   ```csharp
   // activeSec, idleSec, maxIdleSec
   NeraTools.TaskManager.TaskSchedulerEngine.SetDelayTimeSeconds(0, 1, 5);
+  ```
+</details>
+
+---
+
+<details open>
+  <summary>Logging Examples</summary>
+
+### Full Logging examples
+
+<a id="lm-log"></a>
+<details>
+  <summary>[#LME1] Log a user application message</summary>
+  - Basic usage: log a message with default type (Info):
+
+  ```csharp
+  NeraTools.LogManager.Logger.log("Application started", eLogType.Info);
+  ```
+</details>
+
+<a id="lm-logForThisTool"></a>
+<details>
+  <summary>[#LME2] Log a framework/internal message</summary>
+  - Use for internal/framework diagnostics:
+
+  ```csharp
+  NeraTools.LogManager.Logger.logForThisTool("Background service initialized", eLogType.Debug);
+  ```
+</details>
+
+<a id="lm-writeConsole"></a>
+<details>
+  <summary>[#LME3] Enable/disable console logging</summary>
+
+  ```csharp
+  // Enable console log output
+  NeraTools.LogManager.Logger.writeLogInConsole(true);
+
+  // Disable console log output
+  NeraTools.LogManager.Logger.writeLogInConsole(false);
+  ```
+</details>
+
+<a id="lm-writeUi"></a>
+<details>
+  <summary>[#LME4] Enable/disable UI logging</summary>
+
+  ```csharp
+  NeraTools.LogManager.Logger.writeLogInUi(true);
+  ```
+</details>
+
+<a id="lm-writeJson"></a>
+<details>
+  <summary>[#LME5] Write logs to JSON file</summary>
+  - Enable JSON logging and set location/name:
+
+  ```csharp
+  NeraTools.LogManager.Logger.writeLogInJsonFile(true, "C:\\Logs", "AppLog");
+  ```
+</details>
+
+<a id="lm-writeText"></a>
+<details>
+  <summary>[#LME6] Write logs to text file</summary>
+
+  ```csharp
+  NeraTools.LogManager.Logger.writeLogInTextFile(true, "C:\\Logs", "AppLogText");
+  ```
+</details>
+
+<a id="lm-autoOffline"></a>
+<details>
+  <summary>[#LME7] Enable/disable automatic offline mode</summary>
+
+  ```csharp
+  // Disable automatic offline mode
+  NeraTools.LogManager.Logger.AutoOfflinetion(false);
+  ```
+</details>
+
+<a id="lm-disable"></a>
+<details>
+  <summary>[#LME8] Disable logger system immediately</summary>
+
+  ```csharp
+  NeraTools.LogManager.Logger.DisableLoggerSystem();
   ```
 </details>
 
