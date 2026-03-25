@@ -58,6 +58,49 @@ Each table lists the wrapper/group name, a short English description, a short Pe
 ---
 
 
+## Logger / LogManager (Logging wrappers)
+
+| Wrapper / Methods | English (short) | فارسی (کوتاه) | Source file(s) |
+|---|---|---|---|
+| `log`, `logForThisTool` | Log messages with categories and types. | ثبت پیام‌های لاگ با دسته‌بندی و نوع. | `LogManager/Logging - API.cs`, `Logging - Core.cs` |
+| `writeLogInConsole`, `writeLogInUi`, `writeLogInJsonFile`, `writeLogInTextFile` | Configure logging targets (console, UI, JSON, text). | تنظیم مقصدهای خروجی لاگ (کنسول، UI، JSON، متنی). | `LogManager/Logging - API.cs`, `DTOs.cs` |
+| `AutoOfflinetion`, `DisableLoggerSystem` | Toggle offline mode and disable logger. | فعال/غیرفعال کردن حالت آفلاین و غیرفعال‌سازی لاگر. | `LogManager/Logging - API.cs` |
+
+---
+
+## Other notable files & helpers
+
+- `___InDebugTime/__Debug__.cs` — debug helpers used during development.
+- `AssemblyInfo.cs` and `obj/...` — build metadata and generated files.
+
+---
+
+## How to build and run
+
+1. Restore and build solution (from repository root):
+
+```powershell
+dotnet restore
+dotnet build
+```		
+
+2. Run a sample / console debug app:
+
+```powershell
+dotnet run --project ..\NeraTool_ConsoleApp_DebugingServise\NeraTool_ConsoleApp_DebugingServise.csproj
+```
+
+3. For WPF panels open the solution in Visual Studio 2026 and set the desired startup project (e.g., `LogMonitorPanal`, `TaskMonitorPanal`, or `NeraTool_WPF_DebugingServise`).
+
+---
+
+If you want, I can expand this single README into per-project README files with example code snippets (English + Persian) for each wrapper. Reply with: `Create per-project READMEs` to proceed.
+
+
+
+## Examples
+<details>
+  <summary>TaskManager Examples</summary>
 
 ### Full TaskManager examples
 
@@ -207,42 +250,4 @@ NeraTools.TaskManager.TaskSchedulerEngine.SetDelayTimeSeconds(0, 1, 5);
 ```
 
 ---
-
-## Logger / LogManager (Logging wrappers)
-
-| Wrapper / Methods | English (short) | فارسی (کوتاه) | Source file(s) |
-|---|---|---|---|
-| `log`, `logForThisTool` | Log messages with categories and types. | ثبت پیام‌های لاگ با دسته‌بندی و نوع. | `LogManager/Logging - API.cs`, `Logging - Core.cs` |
-| `writeLogInConsole`, `writeLogInUi`, `writeLogInJsonFile`, `writeLogInTextFile` | Configure logging targets (console, UI, JSON, text). | تنظیم مقصدهای خروجی لاگ (کنسول، UI، JSON، متنی). | `LogManager/Logging - API.cs`, `DTOs.cs` |
-| `AutoOfflinetion`, `DisableLoggerSystem` | Toggle offline mode and disable logger. | فعال/غیرفعال کردن حالت آفلاین و غیرفعال‌سازی لاگر. | `LogManager/Logging - API.cs` |
-
----
-
-## Other notable files & helpers
-
-- `___InDebugTime/__Debug__.cs` — debug helpers used during development.
-- `AssemblyInfo.cs` and `obj/...` — build metadata and generated files.
-
----
-
-## How to build and run
-
-1. Restore and build solution (from repository root):
-
-```powershell
-dotnet restore
-dotnet build
-```		
-
-2. Run a sample / console debug app:
-
-```powershell
-dotnet run --project ..\NeraTool_ConsoleApp_DebugingServise\NeraTool_ConsoleApp_DebugingServise.csproj
-```
-
-3. For WPF panels open the solution in Visual Studio 2026 and set the desired startup project (e.g., `LogMonitorPanal`, `TaskMonitorPanal`, or `NeraTool_WPF_DebugingServise`).
-
----
-
-If you want, I can expand this single README into per-project README files with example code snippets (English + Persian) for each wrapper. Reply with: `Create per-project READMEs` to proceed.
-
+</details>
