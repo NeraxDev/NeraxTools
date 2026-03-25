@@ -6,27 +6,44 @@ It is designed to cover common developer needs and provides tools that are not a
 
 🚀 Features
 System and Process Management – Tools for monitoring, controlling, and managing processes and system operations.
-Logging and Operation Management – Track and manage events and system operations for easier debugging and analysis.
-Async Task Queuing and Execution – Full async task management with queuing and fine-grained execution control, similar to the built-in Async system but with more flexibility.
-General Developer Utilities – A collection of useful helper functions for everyday programming tasks that are not natively provided in .NET.
-Lightweight and Optimized – Designed to minimize resource usage, suitable for scalable and scheduled applications.
-Compatible with .NET 10 – Optimized for performance and fully compatible with the latest .NET versions.
-📦 Installation
-Clone the Repository
-git clone https://github.com/NeraxDev/NeraTools.git
-Download Releases
-Full package (DLL + tools)
-Download v0.1.0
-DLL only (not recommended, no extra tools)
-Download DLL
-Source code
-ZIP
- | TAR.GZ
-Clone for latest development
-git clone https://github.com/NeraxDev/NeraTools.git
-NuGet
 
-Coming soon…
+Logging and Operation Management – Track and manage events and system operations for easier debugging and analysis.
+
+Async Task Queuing and Execution – Full async task management with queuing and fine-grained execution control, similar to the built-in Async system but with more flexibility.
+
+General Developer Utilities – A collection of useful helper functions for everyday programming tasks that are not natively provided in .NET.
+
+Lightweight and Optimized – Designed to minimize resource usage, suitable for scalable and scheduled applications.
+
+Compatible with .NET 10 – Optimized for performance and fully compatible with the latest .NET versions.
+
+
+- 📦 Installation
+
+Clone the Repository
+
+git clone https://github.com/NeraxDev/NeraTools.git
+
+
+Download Releases
+
+Full package (DLL + tools)
+
+Download v0.1.0
+
+DLL only (not recommended, no extra tools)
+
+Download DLL
+
+Source code
+
+ZIP | TAR.GZ
+
+Clone for latest development
+
+git clone https://github.com/NeraxDev/NeraTools.git
+
+NuGet --> Coming soon…
 
 🧠 Usage
 Example: Get Process IDs
