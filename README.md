@@ -3,7 +3,7 @@
 This repository contains the `NeraTools` library and several helper applications targeting .NET 10.
 
 Below is a concise, organized reference of the high-level wrapper APIs (wrappers that call into core implementations).
-Each table lists the wrapper/group name, a short English description, a short Persian description, and the primary source file(s).
+Each table lists the wrapper/group name, a short English description, a short Persian description, and the primary source file(s) and Examples.
 
 ---
 
