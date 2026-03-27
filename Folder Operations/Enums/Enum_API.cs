@@ -98,7 +98,7 @@
         public enum FolderDeleteOptions
         {
             /// <summary>
-            /// English : Backup existing files before Deleate.
+            /// English : Backup existing files before Delete.
             /// Farsi  : گرفتن بکاپ از فایل‌های موجود قبل از حذف کردن
             /// </summary>
             BackupBeforeDeleate,
@@ -116,10 +116,9 @@
             Logger,
 
             /// <summary>
-            /// English : Continue Deleting even if some errors occur.
-            /// Farsi  : ادامه عملیات حذف حتی در صورت بروز خطا در برخی فایل‌ها
+            /// برا حذف فولدر های خالی
             /// </summary>
-            IgnoreErrors,
+            filterAnRemoveEmptyFolders,
 
             /// <summary>
             /// English : Only overwrite if source file is newer than destination.
@@ -128,14 +127,14 @@
             OverwriteIfNewer,
 
             /// <summary>
-            /// English : Recursively delete all subfolders and files within the specified folder.
+            /// English : Recursively delete all sub folders and files within the specified folder.
             /// فارسی  : حذف بازگشتی تمام زیرپوشه‌ها و فایل‌های داخل پوشه مشخص شده.
             /// </summary>
             recursive,
 
             /// <summary>
             /// Retry deleting if folder is in use, wait a few seconds and try again.
-            /// فارسی: اگر فولدر در حال استفاده بود، چند ثانیه بعد دوباره تلاش کند
+            /// فارسی: اگر فولدر در حال استفاده بود چند ثانیه بعد دوباره تلاش کند
             /// </summary>
             RetryIfInUse
         }
