@@ -23,7 +23,7 @@ namespace NeraXTools
         /// Operation result including success/failure info.
         /// نتیجه عملیات شامل موفقیت یا خطا
         /// </returns>
-        public static Result CreateFolder(string fullPath, IProgress<float> progress = null) => FolderOpsCore.MakeFolder_Sync(new List<string> { fullPath }, null, progress);
+        public static Result CreateFolder(string fullPath, IProgress<float> progress = null) => FileAndFolderOpsCore.MakeFolder_Sync(new List<string> { fullPath }, null, progress);
 
         /// <summary>
         /// English : Creates multiple folders using a list of full paths.
@@ -39,7 +39,7 @@ namespace NeraXTools
         /// Operation result including success/failure info.
         /// نتیجه عملیات شامل موفقیت یا خطا
         /// </returns>
-        public static Result CreateFolder(List<string> fullPaths, IProgress<float> progress = null) => FolderOpsCore.MakeFolder_Sync(fullPaths, null, progress);
+        public static Result CreateFolder(List<string> fullPaths, IProgress<float> progress = null) => FileAndFolderOpsCore.MakeFolder_Sync(fullPaths, null, progress);
 
         /// <summary>
         /// English : Creates multiple folders using a variable number of full path strings.
@@ -54,7 +54,7 @@ namespace NeraXTools
         /// نتیجه عملیات شامل موفقیت یا خطا
         /// </returns>
         public static Result CreateFolder(params string[] fullPaths) =>
-            FolderOpsCore.MakeFolder_Sync(fullPaths.ToList(), null, null);
+            FileAndFolderOpsCore.MakeFolder_Sync(fullPaths.ToList(), null, null);
 
         /// <summary>
         /// English : Creates multiple folders using a variable number of full path strings.
@@ -70,7 +70,7 @@ namespace NeraXTools
         /// نتیجه عملیات شامل موفقیت یا خطا
         /// </returns>
         public static Result CreateFolder(IProgress<float> progress, params string[] fullPaths) =>
-            FolderOpsCore.MakeFolder_Sync(fullPaths.ToList(), null, progress);
+            FileAndFolderOpsCore.MakeFolder_Sync(fullPaths.ToList(), null, progress);
 
         /// <summary>
         /// English : Creates a folder inside the specified directory with a given folder name.
@@ -86,7 +86,7 @@ namespace NeraXTools
         /// Operation result including success/failure info.
         /// نتیجه عملیات شامل موفقیت یا خطا
         /// </returns>
-        public static Result CreateFolder(string directory, string folderName, IProgress<float> progress = null) => FolderOpsCore.MakeFolder_Sync(new List<string> { directory }, new List<string> { folderName }, progress);
+        public static Result CreateFolder(string directory, string folderName, IProgress<float> progress = null) => FileAndFolderOpsCore.MakeFolder_Sync(new List<string> { directory }, new List<string> { folderName }, progress);
 
         /// <summary>
         /// English : Creates multiple folders in multiple directories using lists of directories and folder names.
@@ -102,7 +102,7 @@ namespace NeraXTools
         /// Operation result including success/failure info.
         /// نتیجه عملیات شامل موفقیت یا خطا
         /// </returns>
-        public static Result CreateFolder(List<string> directories, List<string> folderNames, IProgress<float> progress = null) => FolderOpsCore.MakeFolder_Sync(directories, folderNames, progress);
+        public static Result CreateFolder(List<string> directories, List<string> folderNames, IProgress<float> progress = null) => FileAndFolderOpsCore.MakeFolder_Sync(directories, folderNames, progress);
 
         /// <summary>
         /// English : Creates multiple folders inside a single directory using a variable number of folder names.
@@ -118,7 +118,7 @@ namespace NeraXTools
         /// Operation result including success/failure info.
         /// نتیجه عملیات شامل موفقیت یا خطا
         /// </returns>
-        public static Result CreateFolder(string directory, IProgress<float> progress = null, params string[] folderNames) => FolderOpsCore.MakeFolder_Sync(new List<string> { directory }, folderNames.ToList(), progress);
+        public static Result CreateFolder(string directory, IProgress<float> progress = null, params string[] folderNames) => FileAndFolderOpsCore.MakeFolder_Sync(new List<string> { directory }, folderNames.ToList(), progress);
 
         /// <summary>
         /// English : Creates multiple folders inside a single directory using a variable number of folder names.
@@ -133,7 +133,7 @@ namespace NeraXTools
         /// Operation result including success/failure info.
         /// نتیجه عملیات شامل موفقیت یا خطا
         /// </returns>
-        public static Result CreateFolder(string directory, params string[] folderNames) => FolderOpsCore.MakeFolder_Sync(new List<string> { directory }, folderNames.ToList(), null);
+        public static Result CreateFolder(string directory, params string[] folderNames) => FileAndFolderOpsCore.MakeFolder_Sync(new List<string> { directory }, folderNames.ToList(), null);
 
         /// <summary>
         /// English : Creates the same folder inside multiple parent directories.
@@ -148,7 +148,7 @@ namespace NeraXTools
         /// Operation result including success/failure info.
         /// نتیجه عملیات شامل موفقیت یا خطا
         /// </returns>
-        public static Result CreateFolderInMultiDirectories(string folderName, params string[] directories) => FolderOpsCore.MakeFolder_Sync(directories.ToList(), new List<string> { folderName }, null);
+        public static Result CreateFolderInMultiDirectories(string folderName, params string[] directories) => FileAndFolderOpsCore.MakeFolder_Sync(directories.ToList(), new List<string> { folderName }, null);
 
         /// <summary>
         /// English : Creates the same folder inside multiple parent directories.
@@ -164,7 +164,7 @@ namespace NeraXTools
         /// Operation result including success/failure info.
         /// نتیجه عملیات شامل موفقیت یا خطا
         /// </returns>
-        public static Result CreateFolderInMultiDirectories(string folderName, IProgress<float> progress = null, params string[] directories) => FolderOpsCore.MakeFolder_Sync(directories.ToList(), new List<string> { folderName }, progress);
+        public static Result CreateFolderInMultiDirectories(string folderName, IProgress<float> progress = null, params string[] directories) => FileAndFolderOpsCore.MakeFolder_Sync(directories.ToList(), new List<string> { folderName }, progress);
 
         // =========================
         // Create Folder Methods - Async
@@ -178,7 +178,7 @@ namespace NeraXTools
         /// Example: await CreateFolderAsync(@"C:\NewFolder", progress, ePriorityLevel.High);
         /// </remarks>
         public static async Task<Result> CreateFolderAsync(string fullPath, IProgress<float> progress = null, ePriorityLevel PL = ePriorityLevel.MidLevel, CancellationToken token = default)
-            => await FolderOpsCore.MakeFolder_Async(new List<string> { fullPath }, null, progress, PL, token);
+            => await FileAndFolderOpsCore.MakeFolder_Async(new List<string> { fullPath }, null, progress, PL, token);
 
         /// <summary>
         /// English : Creates a single folder asynchronously (Fire-and-forget).
@@ -188,7 +188,7 @@ namespace NeraXTools
         /// Example: CreateFolderAsync(@"C:\NewFolder", progress);
         /// </remarks>
         public static async Task CreateFolderAsync(string fullPath, IProgress<float> progress = null, CancellationToken token = default)
-            => _ = FolderOpsCore.MakeFolder_Async(new List<string> { fullPath }, null, progress, null, token);
+            => _ = FileAndFolderOpsCore.MakeFolder_Async(new List<string> { fullPath }, null, progress, null, token);
 
         /// <summary>
         /// English : Creates multiple folders from a list asynchronously (Returns Result).
@@ -198,7 +198,7 @@ namespace NeraXTools
         /// Example: await CreateFolderAsync(listOfPaths, progress, ePriorityLevel.Low);
         /// </remarks>
         public static async Task<Result> CreateFolderAsync(List<string> fullPaths, IProgress<float> progress = null, ePriorityLevel PL = ePriorityLevel.MidLevel, CancellationToken token = default)
-            => await FolderOpsCore.MakeFolder_Async(fullPaths, null, progress, PL, token);
+            => await FileAndFolderOpsCore.MakeFolder_Async(fullPaths, null, progress, PL, token);
 
         /// <summary>
         /// English : Creates multiple folders from a list asynchronously (Fire-and-forget).
@@ -208,7 +208,7 @@ namespace NeraXTools
         /// Example: CreateFolderAsync(listOfPaths, progress);
         /// </remarks>
         public static async Task CreateFolderAsync(List<string> fullPaths, IProgress<float> progress = null, CancellationToken token = default)
-            => _ = FolderOpsCore.MakeFolder_Async(fullPaths, null, progress, null, token);
+            => _ = FileAndFolderOpsCore.MakeFolder_Async(fullPaths, null, progress, null, token);
 
         /// <summary>
         /// English : Creates multiple folders using params asynchronously (Returns Result).
@@ -218,7 +218,7 @@ namespace NeraXTools
         /// Example: await CreateFolderAsync(ePriorityLevel.MidLevel, cts.Token, @"C:\F1", @"C:\F2");
         /// </remarks>
         public static async Task<Result> CreateFolderAsync(ePriorityLevel PL, CancellationToken token, params string[] fullPaths)
-            => await FolderOpsCore.MakeFolder_Async(fullPaths.ToList(), null, null, PL, token);
+            => await FileAndFolderOpsCore.MakeFolder_Async(fullPaths.ToList(), null, null, PL, token);
 
         /// <summary>
         /// English : Creates multiple folders using params asynchronously (Fire-and-forget).
@@ -228,7 +228,7 @@ namespace NeraXTools
         /// Example: CreateFolderAsync(cts.Token, @"C:\F1", @"C:\F2");
         /// </remarks>
         public static async Task CreateFolderAsync(CancellationToken token, params string[] fullPaths)
-            => _ = FolderOpsCore.MakeFolder_Async(fullPaths.ToList(), null, null, null, token);
+            => _ = FileAndFolderOpsCore.MakeFolder_Async(fullPaths.ToList(), null, null, null, token);
 
         /// <summary>
         /// English : Creates multiple folders with progress using params asynchronously (Returns Result).
@@ -238,7 +238,7 @@ namespace NeraXTools
         /// Example: await CreateFolderAsync(prog, ePriorityLevel.High, cts.Token, @"path1", @"path2");
         /// </remarks>
         public static async Task<Result> CreateFolderAsync(IProgress<float> progress, ePriorityLevel PL, CancellationToken token, params string[] fullPaths)
-            => await FolderOpsCore.MakeFolder_Async(fullPaths.ToList(), null, progress, PL, token);
+            => await FileAndFolderOpsCore.MakeFolder_Async(fullPaths.ToList(), null, progress, PL, token);
 
         /// <summary>
         /// English : Creates multiple folders with progress using params asynchronously (Fire-and-forget).
@@ -248,7 +248,7 @@ namespace NeraXTools
         /// Example: CreateFolderAsync(prog, cts.Token, @"path1", @"path2");
         /// </remarks>
         public static async Task CreateFolderAsync(IProgress<float> progress, CancellationToken token, params string[] fullPaths)
-            => _ = FolderOpsCore.MakeFolder_Async(fullPaths.ToList(), null, progress, null, token);
+            => _ = FileAndFolderOpsCore.MakeFolder_Async(fullPaths.ToList(), null, progress, null, token);
 
         /// <summary>
         /// English : Creates a folder in a specific directory asynchronously (Returns Result).
@@ -258,7 +258,7 @@ namespace NeraXTools
         /// Example: await CreateFolderAsync(@"C:\Base", "SubFolder", progress);
         /// </remarks>
         public static async Task<Result> CreateFolderAsync(string directory, string folderName, IProgress<float> progress = null, ePriorityLevel PL = ePriorityLevel.MidLevel, CancellationToken token = default)
-            => await FolderOpsCore.MakeFolder_Async(new List<string> { directory }, new List<string> { folderName }, progress, PL, token);
+            => await FileAndFolderOpsCore.MakeFolder_Async(new List<string> { directory }, new List<string> { folderName }, progress, PL, token);
 
         /// <summary>
         /// English : Creates a folder in a specific directory asynchronously (Fire-and-forget).
@@ -268,7 +268,7 @@ namespace NeraXTools
         /// Example: CreateFolderAsync(@"C:\Base", "SubFolder", progress);
         /// </remarks>
         public static async Task CreateFolderAsync(string directory, string folderName, IProgress<float> progress = null, CancellationToken token = default)
-            => _ = FolderOpsCore.MakeFolder_Async(new List<string> { directory }, new List<string> { folderName }, progress, null, token);
+            => _ = FileAndFolderOpsCore.MakeFolder_Async(new List<string> { directory }, new List<string> { folderName }, progress, null, token);
 
         /// <summary>
         /// English : Creates multiple folders from two lists asynchronously (Returns Result).
@@ -278,7 +278,7 @@ namespace NeraXTools
         /// Example: await CreateFolderAsync(listDirs, listNames, progress);
         /// </remarks>
         public static async Task<Result> CreateFolderAsync(List<string> directories, List<string> folderNames, IProgress<float> progress = null, ePriorityLevel PL = ePriorityLevel.MidLevel, CancellationToken token = default)
-            => await FolderOpsCore.MakeFolder_Async(directories, folderNames, progress, PL, token);
+            => await FileAndFolderOpsCore.MakeFolder_Async(directories, folderNames, progress, PL, token);
 
         /// <summary>
         /// English : Creates multiple folders from two lists asynchronously (Fire-and-forget).
@@ -288,7 +288,7 @@ namespace NeraXTools
         /// Example: CreateFolderAsync(listDirs, listNames, progress);
         /// </remarks>
         public static async Task CreateFolderAsync(List<string> directories, List<string> folderNames, IProgress<float> progress = null, CancellationToken token = default)
-            => _ = FolderOpsCore.MakeFolder_Async(directories, folderNames, progress, null, token);
+            => _ = FileAndFolderOpsCore.MakeFolder_Async(directories, folderNames, progress, null, token);
 
         /// <summary>
         /// English : Creates multiple subfolders in one directory with progress asynchronously (Returns Result).
@@ -298,7 +298,7 @@ namespace NeraXTools
         /// Example: await CreateFolderAsync(@"C:\Main", prog, ePriorityLevel.Mid, token, "Sub1", "Sub2");
         /// </remarks>
         public static async Task<Result> CreateFolderAsync(string directory, IProgress<float> progress, ePriorityLevel PL, CancellationToken token, params string[] folderNames)
-            => await FolderOpsCore.MakeFolder_Async(new List<string> { directory }, folderNames.ToList(), progress, PL, token);
+            => await FileAndFolderOpsCore.MakeFolder_Async(new List<string> { directory }, folderNames.ToList(), progress, PL, token);
 
         /// <summary>
         /// English : Creates multiple subfolders in one directory with progress asynchronously (Fire-and-forget).
@@ -308,7 +308,7 @@ namespace NeraXTools
         /// Example: CreateFolderAsync(@"C:\Main", prog, token, "Sub1", "Sub2");
         /// </remarks>
         public static async Task CreateFolderAsync(string directory, IProgress<float> progress, CancellationToken token, params string[] folderNames)
-            => _ = FolderOpsCore.MakeFolder_Async(new List<string> { directory }, folderNames.ToList(), progress, null, token);
+            => _ = FileAndFolderOpsCore.MakeFolder_Async(new List<string> { directory }, folderNames.ToList(), progress, null, token);
 
         /// <summary>
         /// English : Creates multiple subfolders in one directory asynchronously (Returns Result).
@@ -318,7 +318,7 @@ namespace NeraXTools
         /// Example: await CreateFolderAsync(@"C:\Main", ePriorityLevel.Low, token, "SubA", "SubB");
         /// </remarks>
         public static async Task<Result> CreateFolderAsync(string directory, ePriorityLevel PL, CancellationToken token, params string[] folderNames)
-            => await FolderOpsCore.MakeFolder_Async(new List<string> { directory }, folderNames.ToList(), null, PL, token);
+            => await FileAndFolderOpsCore.MakeFolder_Async(new List<string> { directory }, folderNames.ToList(), null, PL, token);
 
         /// <summary>
         /// English : Creates multiple subfolders in one directory asynchronously (Fire-and-forget).
@@ -328,7 +328,7 @@ namespace NeraXTools
         /// Example: CreateFolderAsync(@"C:\Main", token, "SubA", "SubB");
         /// </remarks>
         public static async Task CreateFolderAsync(string directory, CancellationToken token, params string[] folderNames)
-            => _ = FolderOpsCore.MakeFolder_Async(new List<string> { directory }, folderNames.ToList(), null, null, token);
+            => _ = FileAndFolderOpsCore.MakeFolder_Async(new List<string> { directory }, folderNames.ToList(), null, null, token);
 
         /// <summary>
         /// English : Creates the same folder in multiple directories asynchronously (Returns Result).
@@ -338,7 +338,7 @@ namespace NeraXTools
         /// Example: await CreateFolderInMultiDirectoriesAsync("Logs", ePriorityLevel.Mid, token, @"D:\App1", @"E:\App2");
         /// </remarks>
         public static async Task<Result> CreateFolderInMultiDirectoriesAsync(string folderName, ePriorityLevel PL, CancellationToken token, params string[] directories)
-            => await FolderOpsCore.MakeFolder_Async(directories.ToList(), new List<string> { folderName }, null, PL, token);
+            => await FileAndFolderOpsCore.MakeFolder_Async(directories.ToList(), new List<string> { folderName }, null, PL, token);
 
         /// <summary>
         /// English : Creates the same folder in multiple directories asynchronously (Fire-and-forget).
@@ -348,7 +348,7 @@ namespace NeraXTools
         /// Example: CreateFolderInMultiDirectoriesAsync("Logs", token, @"D:\App1", @"E:\App2");
         /// </remarks>
         public static async Task CreateFolderInMultiDirectoriesAsync(string folderName, CancellationToken token, params string[] directories)
-            => _ = FolderOpsCore.MakeFolder_Async(directories.ToList(), new List<string> { folderName }, null, null, token);
+            => _ = FileAndFolderOpsCore.MakeFolder_Async(directories.ToList(), new List<string> { folderName }, null, null, token);
 
         /// <summary>
         /// English : Creates a folder in multiple directories with progress asynchronously (Returns Result).
@@ -358,7 +358,7 @@ namespace NeraXTools
         /// Example: await CreateFolderInMultiDirectoriesAsync("Data", prog, ePriorityLevel.High, token, @"C:\P1", @"D:\P2");
         /// </remarks>
         public static async Task<Result> CreateFolderInMultiDirectoriesAsync(string folderName, IProgress<float> progress, ePriorityLevel PL, CancellationToken token, params string[] directories)
-            => await FolderOpsCore.MakeFolder_Async(directories.ToList(), new List<string> { folderName }, progress, PL, token);
+            => await FileAndFolderOpsCore.MakeFolder_Async(directories.ToList(), new List<string> { folderName }, progress, PL, token);
 
         /// <summary>
         /// English : Creates a folder in multiple directories with progress asynchronously (Fire-and-forget).
@@ -368,7 +368,7 @@ namespace NeraXTools
         /// Example: CreateFolderInMultiDirectoriesAsync("Data", prog, token, @"C:\P1", @"D:\P2");
         /// </remarks>
         public static async Task CreateFolderInMultiDirectoriesAsync(string folderName, IProgress<float> progress, CancellationToken token, params string[] directories)
-            => _ = FolderOpsCore.MakeFolder_Async(directories.ToList(), new List<string> { folderName }, progress, null, token);
+            => _ = FileAndFolderOpsCore.MakeFolder_Async(directories.ToList(), new List<string> { folderName }, progress, null, token);
     } // end of Folder_Ops class
 } // end of NeraXTools namespace
 

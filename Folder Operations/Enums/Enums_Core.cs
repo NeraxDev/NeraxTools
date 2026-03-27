@@ -1,6 +1,6 @@
 ﻿namespace NeraXTools
 {
-    internal static partial class FolderOpsCore
+    internal static partial class FileAndFolderOpsCore
     {
         internal enum Transform_Options
         {

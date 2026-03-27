@@ -3,7 +3,7 @@ using NeraXTools.TaskManager;
 
 namespace NeraXTools
 {
-    internal static partial class FolderOpsCore
+    internal static partial class FileAndFolderOpsCore
     {
         //// =========================
         //// Create Folder Methods - Sync

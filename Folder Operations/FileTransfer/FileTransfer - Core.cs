@@ -3,7 +3,7 @@ using NeraXTools.LogManager;
 
 namespace NeraXTools
 {
-    internal static partial class FolderOpsCore
+    internal static partial class FileAndFolderOpsCore
 
     {
         // =========================

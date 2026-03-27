@@ -15,7 +15,7 @@
         /// English: Specify folder Move options like Overwrite, BackupBeforeOverwrite, SkipExisting, Logger.
         /// Farsi : گزینه‌های کات کردن فولدر مثل بازنویسی، بکاپ قبل از بازنویسی، نادیده گرفتن فایل‌های موجود، و فعال کردن لاگ
         /// </param>
-        public static void MoveFolder(string sourcePath, string destinationPath, params FolderTransfomOptions[] options) => FolderOpsCore.Move_Sync(new List<string> { sourcePath }, new List<string> { destinationPath }, FolderOpsCore.Transform_Options.Copy, null, null, 0, long.MaxValue, null, null, null, null, null, null, options);
+        public static void MoveFolder(string sourcePath, string destinationPath, params FolderTransfomOptions[] options) => FileAndFolderOpsCore.Move_Sync(new List<string> { sourcePath }, new List<string> { destinationPath }, FileAndFolderOpsCore.Transform_Options.Copy, null, null, 0, long.MaxValue, null, null, null, null, null, null, options);
 
         /// <summary>
         /// English : moving multiple folders to a single destination.
@@ -27,7 +27,7 @@
         /// English: Specify folder Move options like Overwrite, BackupBeforeOverwrite, SkipExisting, Logger.
         /// Farsi : گزینه‌های کات کردن فولدر مثل بازنویسی، بکاپ قبل از بازنویسی، نادیده گرفتن فایل‌های موجود، و فعال کردن لاگ
         /// </param>
-        public static void MoveFolders(List<string> sourcePaths, string destinationPath, params FolderTransfomOptions[] options) => FolderOpsCore.Move_Sync(sourcePaths, new List<string> { destinationPath }, FolderOpsCore.Transform_Options.Copy, null, null, 0, long.MaxValue, null, null, null, null, null, null, options);
+        public static void MoveFolders(List<string> sourcePaths, string destinationPath, params FolderTransfomOptions[] options) => FileAndFolderOpsCore.Move_Sync(sourcePaths, new List<string> { destinationPath }, FileAndFolderOpsCore.Transform_Options.Copy, null, null, 0, long.MaxValue, null, null, null, null, null, null, options);
 
         /// <summary>
         /// English : /// Persian: Move multiple folders to multiple destination paths [based on list order];
@@ -39,7 +39,7 @@
         /// English: Specify folder Move options like Overwrite, BackupBeforeOverwrite, SkipExisting, Logger.
         /// Farsi : گزینه‌های کات کردن فولدر مثل بازنویسی، بکاپ قبل از بازنویسی، نادیده گرفتن فایل‌های موجود، و فعال کردن لاگ
         /// </param>
-        public static void MoveFoldersToMultiDestinations(List<string> sourcePaths, List<string> destinationPaths, params FolderTransfomOptions[] options) => FolderOpsCore.Move_Sync(sourcePaths, destinationPaths, FolderOpsCore.Transform_Options.Copy, null, null, 0, long.MaxValue, null, null, null, null, null, null, options);
+        public static void MoveFoldersToMultiDestinations(List<string> sourcePaths, List<string> destinationPaths, params FolderTransfomOptions[] options) => FileAndFolderOpsCore.Move_Sync(sourcePaths, destinationPaths, FileAndFolderOpsCore.Transform_Options.Copy, null, null, 0, long.MaxValue, null, null, null, null, null, null, options);
 
         /// <summary>
         /// English : moving a single folder to multiple destination paths.
@@ -51,7 +51,7 @@
         /// English: Specify folder Move options like Overwrite, BackupBeforeOverwrite, SkipExisting, Logger.
         /// Farsi : گزینه‌های کات کردن فولدر مثل بازنویسی، بکاپ قبل از بازنویسی، نادیده گرفتن فایل‌های موجود، و فعال کردن لاگ
         /// </param>
-        public static void MoveFolderToMultipleDestinations(string sourcePath, List<string> destinationPaths, params FolderTransfomOptions[] options) => FolderOpsCore.Move_Sync(new List<string> { sourcePath }, destinationPaths, FolderOpsCore.Transform_Options.Copy, null, null, 0, long.MaxValue, null, null, null, null, null, null, options);
+        public static void MoveFolderToMultipleDestinations(string sourcePath, List<string> destinationPaths, params FolderTransfomOptions[] options) => FileAndFolderOpsCore.Move_Sync(new List<string> { sourcePath }, destinationPaths, FileAndFolderOpsCore.Transform_Options.Copy, null, null, 0, long.MaxValue, null, null, null, null, null, null, options);
 
         /// <summary>
         /// English : Move folder with combined filters (Name, Extension, Size, Date, Attributes)
@@ -72,7 +72,7 @@
         /// English: Specify folder Move options like Overwrite, BackupBeforeOverwrite, SkipExisting, Logger.
         /// Farsi : گزینه‌های کات کردن فولدر مثل بازنویسی، بکاپ قبل از بازنویسی، نادیده گرفتن فایل‌های موجود، و فعال کردن لاگ
         /// </param>
-        public static void MoveFolder(string sourcePath, string destinationPath, List<string> startWith, List<string> nameFilter = null, List<string> extensions = null, long minSize = 0, long maxSize = long.MaxValue, DateTime? Creation_startDate = null, DateTime? Creation_endDate = null, DateTime? LastWrite_startDate = null, DateTime? LastWrite_endDate = null, FileAttributes? attributes = null, params FolderTransfomOptions[] options) => FolderOpsCore.Move_Sync(new List<string> { sourcePath }, new List<string> { destinationPath }, FolderOpsCore.Transform_Options.Copy, nameFilter, extensions, minSize, maxSize, Creation_startDate, Creation_endDate, LastWrite_startDate, LastWrite_endDate, startWith, attributes, options);
+        public static void MoveFolder(string sourcePath, string destinationPath, List<string> startWith, List<string> nameFilter = null, List<string> extensions = null, long minSize = 0, long maxSize = long.MaxValue, DateTime? Creation_startDate = null, DateTime? Creation_endDate = null, DateTime? LastWrite_startDate = null, DateTime? LastWrite_endDate = null, FileAttributes? attributes = null, params FolderTransfomOptions[] options) => FileAndFolderOpsCore.Move_Sync(new List<string> { sourcePath }, new List<string> { destinationPath }, FileAndFolderOpsCore.Transform_Options.Copy, nameFilter, extensions, minSize, maxSize, Creation_startDate, Creation_endDate, LastWrite_startDate, LastWrite_endDate, startWith, attributes, options);
 
         /// <summary>
         /// English : moving multiple folders to a single destination (Name, Extension, Size, Date, Attributes)
@@ -93,7 +93,7 @@
         /// English: Specify folder Move options like Overwrite, BackupBeforeOverwrite, SkipExisting, Logger.
         /// Farsi : گزینه‌های کات کردن فولدر مثل بازنویسی، بکاپ قبل از بازنویسی، نادیده گرفتن فایل‌های موجود، و فعال کردن لاگ
         /// </param>
-        public static void MoveFolders(List<string> sourcePaths, string destinationPath, List<string> startWith, List<string> nameFilter = null, List<string> extensions = null, long minSize = 0, long maxSize = long.MaxValue, DateTime? Creation_startDate = null, DateTime? Creation_endDate = null, DateTime? LastWrite_startDate = null, DateTime? LastWrite_endDate = null, FileAttributes? attributes = null, params FolderTransfomOptions[] options) => FolderOpsCore.Move_Sync(sourcePaths, new List<string> { destinationPath }, FolderOpsCore.Transform_Options.Copy, nameFilter, extensions, minSize, maxSize, Creation_startDate, Creation_endDate, LastWrite_startDate, LastWrite_endDate, startWith, attributes, options);
+        public static void MoveFolders(List<string> sourcePaths, string destinationPath, List<string> startWith, List<string> nameFilter = null, List<string> extensions = null, long minSize = 0, long maxSize = long.MaxValue, DateTime? Creation_startDate = null, DateTime? Creation_endDate = null, DateTime? LastWrite_startDate = null, DateTime? LastWrite_endDate = null, FileAttributes? attributes = null, params FolderTransfomOptions[] options) => FileAndFolderOpsCore.Move_Sync(sourcePaths, new List<string> { destinationPath }, FileAndFolderOpsCore.Transform_Options.Copy, nameFilter, extensions, minSize, maxSize, Creation_startDate, Creation_endDate, LastWrite_startDate, LastWrite_endDate, startWith, attributes, options);
 
         /// <summary>
         /// English : Move multiple folders to multiple destinations with combined filters
@@ -114,7 +114,7 @@
         /// English: Specify folder Move options like Overwrite, BackupBeforeOverwrite, SkipExisting, Logger.
         /// Farsi : گزینه‌های کات کردن فولدر مثل بازنویسی، بکاپ قبل از بازنویسی، نادیده گرفتن فایل‌های موجود، و فعال کردن لاگ
         /// </param>
-        public static void MoveFoldersToMultiDestinations(List<string> sourcePaths, List<string> destinationPaths, List<string> startWith, List<string> nameFilter = null, List<string> extensions = null, long minSize = 0, long maxSize = long.MaxValue, DateTime? Creation_startDate = null, DateTime? Creation_endDate = null, DateTime? LastWrite_startDate = null, DateTime? LastWrite_endDate = null, FileAttributes? attributes = null, params FolderTransfomOptions[] options) => FolderOpsCore.Move_Sync(sourcePaths, destinationPaths, FolderOpsCore.Transform_Options.Copy, nameFilter, extensions, minSize, maxSize, Creation_startDate, Creation_endDate, LastWrite_startDate, LastWrite_endDate, startWith, attributes, options);
+        public static void MoveFoldersToMultiDestinations(List<string> sourcePaths, List<string> destinationPaths, List<string> startWith, List<string> nameFilter = null, List<string> extensions = null, long minSize = 0, long maxSize = long.MaxValue, DateTime? Creation_startDate = null, DateTime? Creation_endDate = null, DateTime? LastWrite_startDate = null, DateTime? LastWrite_endDate = null, FileAttributes? attributes = null, params FolderTransfomOptions[] options) => FileAndFolderOpsCore.Move_Sync(sourcePaths, destinationPaths, FileAndFolderOpsCore.Transform_Options.Copy, nameFilter, extensions, minSize, maxSize, Creation_startDate, Creation_endDate, LastWrite_startDate, LastWrite_endDate, startWith, attributes, options);
 
         /// <summary>
         /// English : Move a single folder to multiple destinations with combined filters
@@ -135,7 +135,7 @@
         /// English: Specify folder Move options like Overwrite, BackupBeforeOverwrite, SkipExisting, Logger.
         /// Farsi : گزینه‌های کات کردن فولدر مثل بازنویسی، بکاپ قبل از بازنویسی، نادیده گرفتن فایل‌های موجود، و فعال کردن لاگ
         /// </param>
-        public static void MoveFolderToMultipleDestinations(string sourcePath, List<string> destinationPaths, List<string> startWith, List<string> nameFilter = null, List<string> extensions = null, long minSize = 0, long maxSize = long.MaxValue, DateTime? Creation_startDate = null, DateTime? Creation_endDate = null, DateTime? LastWrite_startDate = null, DateTime? LastWrite_endDate = null, FileAttributes? attributes = null, params FolderTransfomOptions[] options) => FolderOpsCore.Move_Sync(new List<string> { sourcePath }, destinationPaths, FolderOpsCore.Transform_Options.Copy, nameFilter, extensions, minSize, maxSize, Creation_startDate, Creation_endDate, LastWrite_startDate, LastWrite_endDate, startWith, attributes, options);
+        public static void MoveFolderToMultipleDestinations(string sourcePath, List<string> destinationPaths, List<string> startWith, List<string> nameFilter = null, List<string> extensions = null, long minSize = 0, long maxSize = long.MaxValue, DateTime? Creation_startDate = null, DateTime? Creation_endDate = null, DateTime? LastWrite_startDate = null, DateTime? LastWrite_endDate = null, FileAttributes? attributes = null, params FolderTransfomOptions[] options) => FileAndFolderOpsCore.Move_Sync(new List<string> { sourcePath }, destinationPaths, FileAndFolderOpsCore.Transform_Options.Copy, nameFilter, extensions, minSize, maxSize, Creation_startDate, Creation_endDate, LastWrite_startDate, LastWrite_endDate, startWith, attributes, options);
 
         /// <summary>
         /// English : Move folders within the address based on name filter
@@ -148,7 +148,7 @@
         /// English: Specify folder Move options like Overwrite, BackupBeforeOverwrite, SkipExisting, Logger.
         /// Farsi : گزینه‌های کات کردن فولدر مثل بازنویسی، بکاپ قبل از بازنویسی، نادیده گرفتن فایل‌های موجود، و فعال کردن لاگ
         /// </param>
-        public static void MoveFolder_WithFilterNames(string sourcePath, string destinationPath, string nameFilter, params FolderTransfomOptions[] options) => FolderOpsCore.Move_Sync(new List<string> { sourcePath }, new List<string> { destinationPath }, FolderOpsCore.Transform_Options.Copy, null, null, 0, long.MaxValue, null, null, null, null, null, null, options);
+        public static void MoveFolder_WithFilterNames(string sourcePath, string destinationPath, string nameFilter, params FolderTransfomOptions[] options) => FileAndFolderOpsCore.Move_Sync(new List<string> { sourcePath }, new List<string> { destinationPath }, FileAndFolderOpsCore.Transform_Options.Copy, null, null, 0, long.MaxValue, null, null, null, null, null, null, options);
 
         /// <summary>
         /// English : Move folders within the address based on Size_Renge filter
@@ -162,7 +162,7 @@
         /// English: Specify folder Move options like Overwrite, BackupBeforeOverwrite, SkipExisting, Logger.
         /// Farsi : گزینه‌های کات کردن فولدر مثل بازنویسی، بکاپ قبل از بازنویسی، نادیده گرفتن فایل‌های موجود، و فعال کردن لاگ
         /// </param>
-        public static void MoveFolderWithSizeFilter(string sourcePath, string destinationPath, long minSize, long maxSize = long.MaxValue, params FolderTransfomOptions[] options) => FolderOpsCore.Move_Sync(new List<string> { sourcePath }, new List<string> { destinationPath }, FolderOpsCore.Transform_Options.Copy, null, null, minSize, maxSize, null, null, null, null, null, null, options);
+        public static void MoveFolderWithSizeFilter(string sourcePath, string destinationPath, long minSize, long maxSize = long.MaxValue, params FolderTransfomOptions[] options) => FileAndFolderOpsCore.Move_Sync(new List<string> { sourcePath }, new List<string> { destinationPath }, FileAndFolderOpsCore.Transform_Options.Copy, null, null, minSize, maxSize, null, null, null, null, null, null, options);
 
         /// <summary>
         /// English : Move folders within the address based on extension filter
@@ -175,7 +175,7 @@
         /// English: Specify folder Move options like Overwrite, BackupBeforeOverwrite, SkipExisting, Logger.
         /// Farsi : گزینه‌های کات کردن فولدر مثل بازنویسی، بکاپ قبل از بازنویسی، نادیده گرفتن فایل‌های موجود، و فعال کردن لاگ
         /// </param>
-        public static void MoveFolderWithExtensionFilter(string sourcePath, string destinationPath, List<string> extensions, params FolderTransfomOptions[] options) => FolderOpsCore.Move_Sync(new List<string> { sourcePath }, new List<string> { destinationPath }, FolderOpsCore.Transform_Options.Copy, null, extensions, 0, long.MaxValue, null, null, null, null, null, null, options);
+        public static void MoveFolderWithExtensionFilter(string sourcePath, string destinationPath, List<string> extensions, params FolderTransfomOptions[] options) => FileAndFolderOpsCore.Move_Sync(new List<string> { sourcePath }, new List<string> { destinationPath }, FileAndFolderOpsCore.Transform_Options.Copy, null, extensions, 0, long.MaxValue, null, null, null, null, null, null, options);
 
         /// <summary>
         /// English : Move folders within the address based on Time_Renge filter
@@ -189,7 +189,7 @@
         /// English: Specify folder Move options like Overwrite, BackupBeforeOverwrite, SkipExisting, Logger.
         /// Farsi : گزینه‌های کات کردن فولدر مثل بازنویسی، بکاپ قبل از بازنویسی، نادیده گرفتن فایل‌های موجود، و فعال کردن لاگ
         /// </param>
-        public static void MoveFolderWith_CreationDateRange(string sourcePath, string destinationPath, DateTime startDate, DateTime endDate, params FolderTransfomOptions[] options) => FolderOpsCore.Move_Sync(new List<string> { sourcePath }, new List<string> { destinationPath }, FolderOpsCore.Transform_Options.Copy, null, null, 0, long.MaxValue, startDate, endDate, null, null, null, null, options);
+        public static void MoveFolderWith_CreationDateRange(string sourcePath, string destinationPath, DateTime startDate, DateTime endDate, params FolderTransfomOptions[] options) => FileAndFolderOpsCore.Move_Sync(new List<string> { sourcePath }, new List<string> { destinationPath }, FileAndFolderOpsCore.Transform_Options.Copy, null, null, 0, long.MaxValue, startDate, endDate, null, null, null, null, options);
 
         // =========================
         //  Folder Move Methods - Async
@@ -207,7 +207,7 @@
         /// </param>
         /// <include file='CommonRemarks.xml' path='doc/members/member[@name="T:CommonRemarks.ParallelAsyncWarning"]/*' />
 
-        public static Task MoveFolder_Async(string sourcePath, string destinationPath, params FolderTransfomOptions[] options) => FolderOpsCore.Move_Async(new List<string> { sourcePath }, new List<string> { destinationPath }, FolderOpsCore.Transform_Options.Copy, null, null, 0, long.MaxValue, null, null, null, null, null, null, options);
+        public static Task MoveFolder_Async(string sourcePath, string destinationPath, params FolderTransfomOptions[] options) => FileAndFolderOpsCore.Move_Async(new List<string> { sourcePath }, new List<string> { destinationPath }, FileAndFolderOpsCore.Transform_Options.Copy, null, null, 0, long.MaxValue, null, null, null, null, null, null, options);
 
         /// <summary>
         /// English : moving multiple folders to a single destinationby Async.
@@ -221,7 +221,7 @@
         /// </param>
         /// <include file='CommonRemarks.xml' path='doc/members/member[@name="T:CommonRemarks.ParallelAsyncWarning"]/*' />
 
-        public static Task MoveFolders_Async(List<string> sourcePaths, string destinationPath, params FolderTransfomOptions[] options) => FolderOpsCore.Move_Async(sourcePaths, new List<string> { destinationPath }, FolderOpsCore.Transform_Options.Copy, null, null, 0, long.MaxValue, null, null, null, null, null, null, options);
+        public static Task MoveFolders_Async(List<string> sourcePaths, string destinationPath, params FolderTransfomOptions[] options) => FileAndFolderOpsCore.Move_Async(sourcePaths, new List<string> { destinationPath }, FileAndFolderOpsCore.Transform_Options.Copy, null, null, 0, long.MaxValue, null, null, null, null, null, null, options);
 
         /// <summary>
         /// English : /// Persian: Move multiple folders to multiple destination paths by Async [based on list order];
@@ -235,7 +235,7 @@
         /// </param>
         /// /// <include file='CommonRemarks.xml' path='doc/members/member[@name="T:CommonRemarks.ParallelAsyncWarning"]/*' />
 
-        public static Task MoveFoldersToMultiDestinations_Async(List<string> sourcePaths, List<string> destinationPaths, params FolderTransfomOptions[] options) => FolderOpsCore.Move_Async(sourcePaths, destinationPaths, FolderOpsCore.Transform_Options.Copy, null, null, 0, long.MaxValue, null, null, null, null, null, null, options);
+        public static Task MoveFoldersToMultiDestinations_Async(List<string> sourcePaths, List<string> destinationPaths, params FolderTransfomOptions[] options) => FileAndFolderOpsCore.Move_Async(sourcePaths, destinationPaths, FileAndFolderOpsCore.Transform_Options.Copy, null, null, 0, long.MaxValue, null, null, null, null, null, null, options);
 
         /// <summary>
         /// English : moving a single folder to multiple destination paths by Async.
@@ -249,7 +249,7 @@
         /// </param>
         /// /// <include file='CommonRemarks.xml' path='doc/members/member[@name="T:CommonRemarks.ParallelAsyncWarning"]/*' />
 
-        public static Task MoveFolderToMultipleDestinations_Async(string sourcePath, List<string> destinationPaths, params FolderTransfomOptions[] options) => FolderOpsCore.Move_Async(new List<string> { sourcePath }, destinationPaths, FolderOpsCore.Transform_Options.Copy, null, null, 0, long.MaxValue, null, null, null, null, null, null, options);
+        public static Task MoveFolderToMultipleDestinations_Async(string sourcePath, List<string> destinationPaths, params FolderTransfomOptions[] options) => FileAndFolderOpsCore.Move_Async(new List<string> { sourcePath }, destinationPaths, FileAndFolderOpsCore.Transform_Options.Copy, null, null, 0, long.MaxValue, null, null, null, null, null, null, options);
 
         /// <summary>
         /// English : Move folder with combined filters  (Name, Extension, Size, Date, Attributes) by Async
@@ -272,7 +272,7 @@
         /// </param>
         /// <include file='CommonRemarks.xml' path='doc/members/member[@name="T:CommonRemarks.ParallelAsyncWarning"]/*' />
 
-        public static Task MoveFolder_Async(string sourcePath, string destinationPath, List<string> startWith, List<string> nameFilter = null, List<string> extensions = null, long minSize = 0, long maxSize = long.MaxValue, DateTime? Creation_startDate = null, DateTime? Creation_endDate = null, DateTime? LastWrite_startDate = null, DateTime? LastWrite_endDate = null, FileAttributes? attributes = null, params FolderTransfomOptions[] options) => FolderOpsCore.Move_Async(new List<string> { sourcePath }, new List<string> { destinationPath }, FolderOpsCore.Transform_Options.Copy, nameFilter, extensions, minSize, maxSize, Creation_startDate, Creation_endDate, LastWrite_startDate, LastWrite_endDate, startWith, attributes, options);
+        public static Task MoveFolder_Async(string sourcePath, string destinationPath, List<string> startWith, List<string> nameFilter = null, List<string> extensions = null, long minSize = 0, long maxSize = long.MaxValue, DateTime? Creation_startDate = null, DateTime? Creation_endDate = null, DateTime? LastWrite_startDate = null, DateTime? LastWrite_endDate = null, FileAttributes? attributes = null, params FolderTransfomOptions[] options) => FileAndFolderOpsCore.Move_Async(new List<string> { sourcePath }, new List<string> { destinationPath }, FileAndFolderOpsCore.Transform_Options.Copy, nameFilter, extensions, minSize, maxSize, Creation_startDate, Creation_endDate, LastWrite_startDate, LastWrite_endDate, startWith, attributes, options);
 
         /// <summary>
         /// English : moving multiple folders to a single destination (Name, Extension, Size, Date, Attributes) by Async
@@ -295,7 +295,7 @@
         /// </param>
         /// <include file='CommonRemarks.xml' path='doc/members/member[@name="T:CommonRemarks.ParallelAsyncWarning"]/*' />
 
-        public static Task MoveFolders_Async(List<string> sourcePaths, string destinationPath, List<string> startWith, List<string> nameFilter = null, List<string> extensions = null, long minSize = 0, long maxSize = long.MaxValue, DateTime? Creation_startDate = null, DateTime? Creation_endDate = null, DateTime? LastWrite_startDate = null, DateTime? LastWrite_endDate = null, FileAttributes? attributes = null, params FolderTransfomOptions[] options) => FolderOpsCore.Move_Async(sourcePaths, new List<string> { destinationPath }, FolderOpsCore.Transform_Options.Copy, nameFilter, extensions, minSize, maxSize, Creation_startDate, Creation_endDate, LastWrite_startDate, LastWrite_endDate, startWith, attributes, options);
+        public static Task MoveFolders_Async(List<string> sourcePaths, string destinationPath, List<string> startWith, List<string> nameFilter = null, List<string> extensions = null, long minSize = 0, long maxSize = long.MaxValue, DateTime? Creation_startDate = null, DateTime? Creation_endDate = null, DateTime? LastWrite_startDate = null, DateTime? LastWrite_endDate = null, FileAttributes? attributes = null, params FolderTransfomOptions[] options) => FileAndFolderOpsCore.Move_Async(sourcePaths, new List<string> { destinationPath }, FileAndFolderOpsCore.Transform_Options.Copy, nameFilter, extensions, minSize, maxSize, Creation_startDate, Creation_endDate, LastWrite_startDate, LastWrite_endDate, startWith, attributes, options);
 
         /// <summary>
         /// English : Move multiple folders to multiple destinations with combined filters by Async
@@ -318,7 +318,7 @@
         /// </param>
         /// <include file='CommonRemarks.xml' path='doc/members/member[@name="T:CommonRemarks.ParallelAsyncWarning"]/*' />
 
-        public static Task MoveFoldersToMultiDestinations_Async(List<string> sourcePaths, List<string> destinationPaths, List<string> startWith, List<string> nameFilter = null, List<string> extensions = null, long minSize = 0, long maxSize = long.MaxValue, DateTime? Creation_startDate = null, DateTime? Creation_endDate = null, DateTime? LastWrite_startDate = null, DateTime? LastWrite_endDate = null, FileAttributes? attributes = null, params FolderTransfomOptions[] options) => FolderOpsCore.Move_Async(sourcePaths, destinationPaths, FolderOpsCore.Transform_Options.Copy, nameFilter, extensions, minSize, maxSize, Creation_startDate, Creation_endDate, LastWrite_startDate, LastWrite_endDate, startWith, attributes, options);
+        public static Task MoveFoldersToMultiDestinations_Async(List<string> sourcePaths, List<string> destinationPaths, List<string> startWith, List<string> nameFilter = null, List<string> extensions = null, long minSize = 0, long maxSize = long.MaxValue, DateTime? Creation_startDate = null, DateTime? Creation_endDate = null, DateTime? LastWrite_startDate = null, DateTime? LastWrite_endDate = null, FileAttributes? attributes = null, params FolderTransfomOptions[] options) => FileAndFolderOpsCore.Move_Async(sourcePaths, destinationPaths, FileAndFolderOpsCore.Transform_Options.Copy, nameFilter, extensions, minSize, maxSize, Creation_startDate, Creation_endDate, LastWrite_startDate, LastWrite_endDate, startWith, attributes, options);
 
         /// <summary>
         /// English : Move a single folder to multiple destinations with combined filters by Async
@@ -341,7 +341,7 @@
         /// </param>
         /// <include file='CommonRemarks.xml' path='doc/members/member[@name="T:CommonRemarks.ParallelAsyncWarning"]/*' />
 
-        public static Task MoveFolderToMultipleDestinations_Async(string sourcePath, List<string> destinationPaths, List<string> startWith, List<string> nameFilter = null, List<string> extensions = null, long minSize = 0, long maxSize = long.MaxValue, DateTime? Creation_startDate = null, DateTime? Creation_endDate = null, DateTime? LastWrite_startDate = null, DateTime? LastWrite_endDate = null, FileAttributes? attributes = null, params FolderTransfomOptions[] options) => FolderOpsCore.Move_Async(new List<string> { sourcePath }, destinationPaths, FolderOpsCore.Transform_Options.Copy, nameFilter, extensions, minSize, maxSize, Creation_startDate, Creation_endDate, LastWrite_startDate, LastWrite_endDate, startWith, attributes, options);
+        public static Task MoveFolderToMultipleDestinations_Async(string sourcePath, List<string> destinationPaths, List<string> startWith, List<string> nameFilter = null, List<string> extensions = null, long minSize = 0, long maxSize = long.MaxValue, DateTime? Creation_startDate = null, DateTime? Creation_endDate = null, DateTime? LastWrite_startDate = null, DateTime? LastWrite_endDate = null, FileAttributes? attributes = null, params FolderTransfomOptions[] options) => FileAndFolderOpsCore.Move_Async(new List<string> { sourcePath }, destinationPaths, FileAndFolderOpsCore.Transform_Options.Copy, nameFilter, extensions, minSize, maxSize, Creation_startDate, Creation_endDate, LastWrite_startDate, LastWrite_endDate, startWith, attributes, options);
 
         /// <summary>
         /// English : Move folders within the address based on name filter by Async
@@ -356,7 +356,7 @@
         /// </param>
         /// <include file='CommonRemarks.xml' path='doc/members/member[@name="T:CommonRemarks.ParallelAsyncWarning"]/*' />
 
-        public static Task MoveFolder_WithFilterNames_Async(string sourcePath, string destinationPath, string nameFilter, params FolderTransfomOptions[] options) => FolderOpsCore.Move_Async(new List<string> { sourcePath }, new List<string> { destinationPath }, FolderOpsCore.Transform_Options.Copy, null, null, 0, long.MaxValue, null, null, null, null, null, null, options);
+        public static Task MoveFolder_WithFilterNames_Async(string sourcePath, string destinationPath, string nameFilter, params FolderTransfomOptions[] options) => FileAndFolderOpsCore.Move_Async(new List<string> { sourcePath }, new List<string> { destinationPath }, FileAndFolderOpsCore.Transform_Options.Copy, null, null, 0, long.MaxValue, null, null, null, null, null, null, options);
 
         /// <summary>
         /// English : Move folders within the address based on Size_Renge filter by Async
@@ -372,7 +372,7 @@
         /// </param>
         /// <include file='CommonRemarks.xml' path='doc/members/member[@name="T:CommonRemarks.ParallelAsyncWarning"]/*' />
 
-        public static Task MoveFolderWithSizeFilter_Async(string sourcePath, string destinationPath, long minSize, long maxSize = long.MaxValue, params FolderTransfomOptions[] options) => FolderOpsCore.Move_Async(new List<string> { sourcePath }, new List<string> { destinationPath }, FolderOpsCore.Transform_Options.Copy, null, null, minSize, maxSize, null, null, null, null, null, null, options);
+        public static Task MoveFolderWithSizeFilter_Async(string sourcePath, string destinationPath, long minSize, long maxSize = long.MaxValue, params FolderTransfomOptions[] options) => FileAndFolderOpsCore.Move_Async(new List<string> { sourcePath }, new List<string> { destinationPath }, FileAndFolderOpsCore.Transform_Options.Copy, null, null, minSize, maxSize, null, null, null, null, null, null, options);
 
         /// <summary>
         /// English : Move folders within the address based on extension filter by Async
@@ -387,7 +387,7 @@
         /// </param>
         /// <include file='CommonRemarks.xml' path='doc/members/member[@name="T:CommonRemarks.ParallelAsyncWarning"]/*' />
 
-        public static Task MoveFolderWithExtensionFilter_Async(string sourcePath, string destinationPath, List<string> extensions, params FolderTransfomOptions[] options) => FolderOpsCore.Move_Async(new List<string> { sourcePath }, new List<string> { destinationPath }, FolderOpsCore.Transform_Options.Copy, null, extensions, 0, long.MaxValue, null, null, null, null, null, null, options);
+        public static Task MoveFolderWithExtensionFilter_Async(string sourcePath, string destinationPath, List<string> extensions, params FolderTransfomOptions[] options) => FileAndFolderOpsCore.Move_Async(new List<string> { sourcePath }, new List<string> { destinationPath }, FileAndFolderOpsCore.Transform_Options.Copy, null, extensions, 0, long.MaxValue, null, null, null, null, null, null, options);
 
         /// <summary>
         /// English : Move folders within the address based on Time_Renge filter by Async
@@ -403,6 +403,6 @@
         /// </param>
         /// <include file='CommonRemarks.xml' path='doc/members/member[@name="T:CommonRemarks.ParallelAsyncWarning"]/*' />
 
-        public static Task MoveFolderWith_CreationDateRange_Async(string sourcePath, string destinationPath, DateTime startDate, DateTime endDate, params FolderTransfomOptions[] options) => FolderOpsCore.Move_Async(new List<string> { sourcePath }, new List<string> { destinationPath }, FolderOpsCore.Transform_Options.Copy, null, null, 0, long.MaxValue, startDate, endDate, null, null, null, null, options);
+        public static Task MoveFolderWith_CreationDateRange_Async(string sourcePath, string destinationPath, DateTime startDate, DateTime endDate, params FolderTransfomOptions[] options) => FileAndFolderOpsCore.Move_Async(new List<string> { sourcePath }, new List<string> { destinationPath }, FileAndFolderOpsCore.Transform_Options.Copy, null, null, 0, long.MaxValue, startDate, endDate, null, null, null, null, options);
     } // end of Folder_Ops class
 } // end of NeraXTools namespace

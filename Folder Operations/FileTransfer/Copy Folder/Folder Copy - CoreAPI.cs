@@ -3,7 +3,7 @@ using static NeraXTools.FolderOps;
 
 namespace NeraXTools
 {
-    internal static partial class FolderOpsCore
+    internal static partial class FileAndFolderOpsCore
     {
         internal static void Copy_Sync(
                     List<string> sourcePaths,

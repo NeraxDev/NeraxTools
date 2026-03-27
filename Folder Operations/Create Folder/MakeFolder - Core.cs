@@ -1,6 +1,6 @@
 ﻿namespace NeraXTools
 {
-    internal static partial class FolderOpsCore
+    internal static partial class FileAndFolderOpsCore
     {
         private static async Task<Result> MakeFolder_Core(
                                   Func<string, Task<bool>> makeDir,
