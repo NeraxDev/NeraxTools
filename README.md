@@ -87,7 +87,7 @@ Thanks 💞
 - 📜 License
 
 Licensed under Apache License 2.0.
-پ
+
 
 
 
@@ -119,7 +119,7 @@ Licensed under Apache License 2.0.
 | `GetRunningTaskCount()`| Returns number of currently running tasks. | تعداد تسک‌های درحال اجرا را برمی‌گرداند. | `TaskManager/TaskManager - API.cs` | [Example](#tm-getrunningcount) [#TME10] |
 | `TaskMonitor(bool,int,CancellationToken)`| Start/stop console task monitor with refresh interval. | شروع/توقف نمایشگر کنسول تسک‌ها با نرخ به‌روزرسانی. | `TaskManager/TaskManager - API.cs` | [Example](#tm-taskmonitor)  [#TME11] |
 | `SetDelayTimeMilliseconds(int activeMs, int idleMs, int maxIdleMs)`| Configure scheduler delays in milliseconds for active/idle states. | تنظیم تاخیر زمان‌بندی‌کننده به میلی‌ثانیه برای حالات فعال و بیکاری. | `TaskManager/TaskManager - API.cs` | [Example](#tm-setdelay-ms) [#TME12]|
-| `SetDelayTimeSeconds(int activeSec,int idleSec,int maxIdleSec)`| Configure scheduler delays in seconds (wrapper over ms method). | تنظیم تاخیر زمان‌بندی‌کننده به ثانیه (شبه‌رپ) بر پایه متد میلی‌ثانیه. | `TaskManager/TaskManager - API.cs` | [Example](#tm-setdelay-sec) [#TME13]|
+| `SetDelayTimeSeconds(int activeSec,int idleSec,int maxIdleSec)`| Configure scheduler delays in seconds (wrapper over ms method). | تنظیم تاخیر زمان‌بندی‌کننده به ثانیه بر پایه متد میلی‌ثانیه. | `TaskManager/TaskManager - API.cs` | [Example](#tm-setdelay-sec) [#TME13]|
 
 ---
 
