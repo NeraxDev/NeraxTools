@@ -29,7 +29,7 @@ Download Releases
 
 
 - **Full package (DLL + tools)**  
-[NeraXTools v0.1.0 ZIP](https://github.com/NeraxDev/NeraXTools/releases/download/v0.1.0/NeraXTools.v0.1.0.zip)
+[NeraXTools v0.1.0 ZIP](https://github.com/NeraxDev/NeraxTools/releases/download/v0.1.0/NeraTools.v0.1.0.zip)
 
 - **DLL only (not recommended, no extra tools)**  
 [NeraXTools DLL](https://github.com/NeraxDev/NeraXTools/releases/download/v0.1.0/NeraXTools_notRecommend.dll)
