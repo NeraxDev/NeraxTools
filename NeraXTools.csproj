@@ -1,67 +1,50 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
+	<TargetFramework>net10.0</TargetFramework>
+	<ImplicitUsings>enable</ImplicitUsings>
+	<Nullable>enable</Nullable>
+	<GenerateDocumentationFile>true</GenerateDocumentationFile>
 
-    <TargetFramework>net10.0</TargetFramework>
+	<PackageId>NeraXTools</PackageId>
+	<Version>0.0.1</Version>
+	<Authors>NeraX Studio - Arian</Authors>
+	<Description>NeraX Tools with Auto-Copy Assets</Description>
 
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-
-<!-- For Now disabled for testing or Debuging -->
-    <!-- Optimization -->
-    <!-- <Optimize>true</Optimize>  -->
-
-    <!-- Documentation XML -->
-    <GenerateDocumentationFile>true</GenerateDocumentationFile>
-
-<!-- For Now disabled for testing or debuging -->
-    <!-- Package -->
-    <!-- <GeneratePackageOnBuild>true</GeneratePackageOnBuild>  -->
-
-    <!-- Include XML + Content + 
-    put -->
-    <IncludeBuildOutput>true</IncludeBuildOutput>
-    <IncludeContentInPack>true</IncludeContentInPack>
-
-    <IncludeSymbols>true</IncludeSymbols>
-    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
-
-    <!-- Metadata -->
-    <PackageId>NeraTool</PackageId>
-    <Version>0.0.1</Version>
-    <Authors>NeraX Studio - Arian</Authors>
-    <Description>Empty</Description>
-    <Configurations>Debug;Release;</Configurations>
-    <RunAnalyzersDuringBuild>True</RunAnalyzersDuringBuild>
-
+	<IncludeBuildOutput>true</IncludeBuildOutput>
+	<IncludeContentInPack>true</IncludeContentInPack>
+	<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Program Operations - Copy\**" />
-    <EmbeddedResource Remove="Program Operations - Copy\**" />
-    <None Remove="Program Operations - Copy\**" />
+	<Compile Remove="LogManager\Apps\**\*.cs" />
+	<Compile Remove="TaskManager\Apps\**\*.cs" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="LogManager\Apps\LogMonitorPanal_x64.exe" />
-    <None Remove="LogManager\Apps\LogMonitorPanal_x86.exe" />
-    <None Remove="TaskManager\Apps\TaskMonitorPanel_x64.exe" />
-    <None Remove="TaskManager\Apps\TaskMonitorPanel_x86.exe" />
+	<None Include="NeraXTools.targets" Pack="true" PackagePath="build\NeraXTools.targets" />
+	<None Include="LogManager\LogManager.targets" Pack="true" PackagePath="build\LogManager\LogManager.targets" />
+	<None Include="TaskManager\TaskManager.targets" Pack="true" PackagePath="build\TaskManager\TaskManager.targets" />
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="LogManager\Apps\LogMonitorPanal_x64.exe">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="LogManager\Apps\LogMonitorPanal_x86.exe">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="TaskManager\Apps\TaskMonitorPanel_x64.exe">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="TaskManager\Apps\TaskMonitorPanel_x86.exe">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+	<None Include="LogManager\Apps\**\*.*" Exclude="LogManager\Apps\**\*.cs" Pack="true" PackagePath="build\LogManager\Apps\" />
+	<None Include="TaskManager\Apps\**\*.*" Exclude="TaskManager\Apps\**\*.cs" Pack="true" PackagePath="build\TaskManager\Apps\" />
+  </ItemGroup>
+
+  <ItemGroup>
+	<Content Include="LogManager\Apps\**\*.*" Exclude="LogManager\Apps\**\*.cs">
+	  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	</Content>
+	<Content Include="TaskManager\Apps\**\*.*" Exclude="TaskManager\Apps\**\*.cs">
+	  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	</Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="LogManager\Apps\AppsLocations.cs" />
+    <Compile Include="TaskManager\Apps\AppsLocations.cs" />
   </ItemGroup>
 
 </Project>

@@ -37,7 +37,7 @@ namespace NeraXTools.LogManager
                     globalCTS = new CancellationTokenSource();
                 }
                 if (Interlocked.CompareExchange(ref isRunedProcessLog, true, false) == false)
-                    _ = TaskSchedulerEngine.RunAsync(async ct => { ProcessLog(timeOut_sec, timerCTS); }, ePriorityLevel.StartLevel, globalCTS.Token);
+                    await /*TaskSchedulerEngine.RunAsync(async ct => { */ProcessLog(timeOut_sec, timerCTS)/*; }, ePriorityLevel.StartLevel, globalCTS.Token)*/;
                 if (timerCTS != null && !timerCTS.IsCancellationRequested)
                     timerCTS.Cancel();
                 // اگر مود مشخص نشده، AllModes پیش‌فرض باشد
@@ -172,7 +172,7 @@ namespace NeraXTools.LogManager
             if (isEnable)
             {
                 if (Interlocked.CompareExchange(ref isUiAppRuned, true, false) == false)
-                    processRunResult = ProgramOps.Run(AppsLocations.TaskMonitorPanel_x64, AppsLocations.TaskMonitorPanel_x86);
+                    processRunResult = ProgramOps.Run(AppsLocations.LogmanitorPanal_x64, AppsLocations.LogmanitorPanal_x86);
                 if (Interlocked.CompareExchange(ref isServerInitialized, true, false) == false)
                 {
                     bool connected = await InitializeServer(10);

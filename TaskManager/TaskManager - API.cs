@@ -29,11 +29,6 @@
         /// <param name="taskFunc">
         /// Async function that receives cancellation token and returns result.
         /// تابع ناهمزمان که CancellationToken دریافت کرده و خروجی برمی‌گرداند.
-        /// </param>
-        /// <param name="PL">
-        /// Priority level of task execution.
-        /// تعیین سطح اولویت اجرای تسک.
-        /// </param>
         /// <param name="cancellationToken">
         /// Optional cancellation token.
         /// Token اختیاری برای لغو عملیات.
@@ -57,7 +52,7 @@
         /// English:
         /// Runs an asynchronous task without returning result.
         /// Used for background processing or fire-and-forget operations.
-        ///
+        ///------------------------------------------------------------
         /// Farsi:
         /// اجرای تسک ناهمزمان بدون مقدار خروجی.
         /// برای عملیات‌های پس‌زمینه استفاده می‌شود.
@@ -84,7 +79,6 @@
         ///
         /// Tasks may execute individually without strict priority sequencing
         /// if the caller does not observe the returned Task.
-        ///
         /// ----------------------------------------------------------------
         /// Farsi:
         /// اجرای Fire-and-forget پشتیبانی می‌شود.

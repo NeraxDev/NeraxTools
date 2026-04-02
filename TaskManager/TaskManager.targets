@@ -1,0 +1,9 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+	<ItemGroup>
+		<None Include="$(MSBuildThisFileDirectory)Apps\**\*.*"
+			  Exclude="$(MSBuildThisFileDirectory)Apps\**\*.cs">
+			<Link>TaskManager\Apps\%(RecursiveDir)%(FileName)%(Extension)</Link>
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+	</ItemGroup>
+</Project>
