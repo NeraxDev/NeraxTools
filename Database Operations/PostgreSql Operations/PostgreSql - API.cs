@@ -7,7 +7,7 @@
     /// <remarks>
     /// Use this class to execute commands, queries, and handle database transactions with built-in retry logic and dynamic timeouts.
     /// </remarks>
-    public class PostgreSql
+    public static class PostgreSql
     {
         // ================================================================================== 1. NON-QUERY WRAPPERS ==================================================================================
 
@@ -21,7 +21,7 @@
         /// await db.ExecuteNonQueryAsync(connStr, "UPDATE Users SET IsActive = true WHERE Id = 1");
         /// ]]>
         /// </example>
-        public async Task ExecuteNonQueryAsync(string connectionString, string sql)
+        public static async Task ExecuteNonQueryAsync(string connectionString, string sql)
             => await PostgreSql_Core.ExecuteNonQueryAsync_Core(connectionString, new List<string> { sql });
 
         /// <summary>
@@ -31,7 +31,7 @@
         /// <param name="sql">The SQL command to execute.</param>
         /// <param name="ct">Cancellation token to abort the operation.</param>
         /// <param name="timeoutSeconds">Execution timeout (0: Dynamic, -1: Infinite).</param>
-        public async Task ExecuteNonQueryAsync(string connectionString, string sql, CancellationToken ct, int timeoutSeconds = 0)
+        public static async Task ExecuteNonQueryAsync(string connectionString, string sql, CancellationToken ct, int timeoutSeconds = 0)
           => await PostgreSql_Core.ExecuteNonQueryAsync_Core(connectionString, new List<string> { sql }, timeoutSeconds, ct);
 
         /// <summary>
@@ -44,7 +44,7 @@
         /// await db.ExecuteNonQueryAsync(connStr, "INSERT INTO Logs...", "UPDATE Stats...");
         /// ]]>
         /// </example>
-        public async Task ExecuteNonQueryAsync(string connectionString, params string[] sqls)
+        public static async Task ExecuteNonQueryAsync(string connectionString, params string[] sqls)
             => await PostgreSql_Core.ExecuteNonQueryAsync_Core(connectionString, new List<string>(sqls));
 
         /// <summary>
@@ -52,7 +52,7 @@
         /// </summary>
         /// <param name="connectionString">The PostgreSQL connection string.</param>
         /// <param name="sqlList">List of SQL commands to execute.</param>
-        public async Task ExecuteNonQueryAsync(string connectionString, List<string> sqlList)
+        public static async Task ExecuteNonQueryAsync(string connectionString, List<string> sqlList)
             => await PostgreSql_Core.ExecuteNonQueryAsync_Core(connectionString, sqlList);
 
         /// <summary>
@@ -62,7 +62,7 @@
         /// <param name="sqlList">List of SQL commands.</param>
         /// <param name="ct">Cancellation token.</param>
         /// <param name="timeoutSeconds">Execution timeout (0: Dynamic, -1: Infinite).</param>
-        public async Task ExecuteNonQueryAsync(string connectionString, List<string> sqlList, CancellationToken ct, int timeoutSeconds = 0)
+        public static async Task ExecuteNonQueryAsync(string connectionString, List<string> sqlList, CancellationToken ct, int timeoutSeconds = 0)
             => await PostgreSql_Core.ExecuteNonQueryAsync_Core(connectionString, sqlList, timeoutSeconds, ct);
 
         // ================================================================================== 2. SCALAR WRAPPERS ==================================================================================
@@ -73,7 +73,7 @@
         /// <param name="connectionString">The PostgreSQL connection string.</param>
         /// <param name="sql">SQL query (e.g., SELECT COUNT(*)).</param>
         /// <returns>The scalar result as an object.</returns>
-        public async Task<object> ExecuteQueryScalarAsync(string connectionString, string sql)
+        public static async Task<object> ExecuteQueryScalarAsync(string connectionString, string sql)
             => await PostgreSql_Core.ExecuteQueryScalarAsync_Core(connectionString, sql);
 
         /// <summary>
@@ -83,7 +83,7 @@
         /// <param name="sql">SQL query.</param>
         /// <param name="ct">Cancellation token.</param>
         /// <param name="timeoutSeconds">Execution timeout.</param>
-        public async Task<object> ExecuteQueryScalarAsync(string connectionString, string sql, CancellationToken ct, int timeoutSeconds)
+        public static async Task<object> ExecuteQueryScalarAsync(string connectionString, string sql, CancellationToken ct, int timeoutSeconds)
             => await PostgreSql_Core.ExecuteQueryScalarAsync_Core(connectionString, sql, timeoutSeconds, ct);
 
         // ================================================================================== 3. OBJECT LIST WRAPPERS (DTO) ==================================================================================
@@ -99,7 +99,7 @@
         /// var users = await db.ExecuteQueryToListAsync<UserDto>(connStr, "SELECT * FROM Users");
         /// ]]>
         /// </example>
-        public async Task<List<T>> ExecuteQueryToListAsync<T>(string connectionString, string sql) where T : new()
+        public static async Task<List<T>> ExecuteQueryToListAsync<T>(string connectionString, string sql) where T : new()
             => await PostgreSql_Core.ExecuteQueryToListAsync_Core<T>(connectionString, sql, 0);
 
         /// <summary>
@@ -111,7 +111,7 @@
         /// <param name="readRowCount">Limit the number of rows to read (0 for all).</param>
         /// <param name="ct">Cancellation token.</param>
         /// <param name="timeoutSeconds">Execution timeout.</param>
-        public async Task<List<T>> ExecuteQueryToListAsync<T>(string connectionString, string sql, int readRowCount, CancellationToken ct, int timeoutSeconds = 0) where T : new()
+        public static async Task<List<T>> ExecuteQueryToListAsync<T>(string connectionString, string sql, int readRowCount, CancellationToken ct, int timeoutSeconds = 0) where T : new()
             => await PostgreSql_Core.ExecuteQueryToListAsync_Core<T>(connectionString, sql, readRowCount, timeoutSeconds, ct);
 
         // ================================================================================== 4. SIMPLE LIST WRAPPERS ==================================================================================
@@ -127,7 +127,7 @@
         /// List<string> names = await db.ExecuteQueryToSimpleListAsync<string>(connStr, "SELECT Name FROM Users");
         /// ]]>
         /// </example>
-        public async Task<List<T>> ExecuteQueryToSimpleListAsync<T>(string connectionString, string sql)
+        public static async Task<List<T>> ExecuteQueryToSimpleListAsync<T>(string connectionString, string sql)
             => await PostgreSql_Core.ExecuteQueryToSimpleListAsync_Core<T>(connectionString, sql, 0);
 
         /// <summary>
@@ -139,7 +139,7 @@
         /// <param name="readRowCount">Limit the number of rows to read.</param>
         /// <param name="ct">Cancellation token.</param>
         /// <param name="timeoutSeconds">Execution timeout.</param>
-        public async Task<List<T>> ExecuteQueryToSimpleListAsync<T>(string connectionString, string sql, int readRowCount, CancellationToken ct, int timeoutSeconds = 0)
+        public static async Task<List<T>> ExecuteQueryToSimpleListAsync<T>(string connectionString, string sql, int readRowCount, CancellationToken ct, int timeoutSeconds = 0)
             => await PostgreSql_Core.ExecuteQueryToSimpleListAsync_Core<T>(connectionString, sql, readRowCount, timeoutSeconds, ct);
     }
 }
