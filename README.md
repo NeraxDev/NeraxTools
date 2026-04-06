@@ -1,4 +1,4 @@
-## NeraXTools
+## NeraXTools V0.1.2
 
 NeraXTools is a lightweight, evolving collection of high-performance utilities for system management, logging, and async task handling in .NET.
 
