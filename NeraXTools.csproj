@@ -8,7 +8,7 @@
 	<GenerateDocumentationFile>true</GenerateDocumentationFile>
 
 	<PackageId>NeraXTools</PackageId>
-	<Version>0.0.1</Version>
+	<Version>0.0.2</Version>
 	<Authors>NeraX Studio - Arian</Authors>
 	<Description>NeraX Tools with Auto-Copy Assets</Description>
 
@@ -45,6 +45,10 @@
   <ItemGroup>
     <Compile Include="LogManager\Apps\AppsLocations.cs" />
     <Compile Include="TaskManager\Apps\AppsLocations.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Npgsql" Version="10.0.2" />
   </ItemGroup>
 
 </Project>
