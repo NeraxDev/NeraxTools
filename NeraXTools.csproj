@@ -9,8 +9,8 @@
 
 	<PackageId>NeraXTools</PackageId>
 	  <Version>0.1.2-build.3</Version>
-	<Authors>NeraX Studio - Arian</Authors>
-	<Description>NeraX Tools with Auto-Copy Assets</Description>
+	<Authors>NeraX Studio</Authors>
+	<Description>General-purpose developer tools and utilities.</Description>
 
 	<IncludeBuildOutput>true</IncludeBuildOutput>
 	<IncludeContentInPack>true</IncludeContentInPack>
@@ -50,5 +50,34 @@
   <ItemGroup>
     <PackageReference Include="Npgsql" Version="10.0.2" />
   </ItemGroup>
+  <!--
+	Copy generated NuGet packages to one or more folders after packing.
+	The example destination below includes a personal/local path for testing.
+	Keep in mind this path is user-specific and should be changed or removed
+	before sharing the project or CI configuration.
+  -->
+  <ItemGroup>
+	<PackageDestination Include="C:\Users\Nera\source\repos\Local Package" />
+	<!-- Add more destinations as needed: -->
+	<!-- <PackageDestination Include="\\server\NuGetFeed" /> -->
+  </ItemGroup>
+
+  <Target Name="CopyNupkgsToDestinations" AfterTargets="Pack">
+	<!-- Find produced .nupkg files in common output locations -->
+	<ItemGroup>
+	  <BuiltPackages Include="$(PackageOutputPath)\*.nupkg" />
+	  <BuiltPackages Include="$(OutputPath)\*.nupkg" />
+	  <BuiltPackages Include="$(MSBuildProjectDirectory)\bin\$(Configuration)\*.nupkg" />
+	</ItemGroup>
+
+	<!-- Remove duplicates and ensure we have real files -->
+	<ItemGroup>
+	  <BuiltPackages Remove="@(BuiltPackages)" Condition="'@(_BuiltPackages_Internal)'==''" />
+	  <_BuiltPackages_Internal Include="@(BuiltPackages)" />
+	</ItemGroup>
+
+	<!-- Copy each built package to each destination. -->
+	<Copy SourceFiles="@(_BuiltPackages_Internal)" DestinationFolder="%(PackageDestination.Identity)" SkipUnchangedFiles="true" />
+  </Target>
 
 </Project>
