@@ -12,7 +12,7 @@ namespace NeraXTools.Database.PostgreSql
     {
         // ================================================================================== 1. NON-QUERY ==================================================================================
 
-        internal static async Task ExecuteNonQueryAsync_Core(string connectionString, List<string> sqlList, int timeoutSeconds = 0, CancellationToken ct = default)
+        internal static async Task ExecuteNonQueryAsync_Core(string connectionString, List<string> sqlList, CancellationToken ct, int timeoutSeconds = -1)
         {
             if (sqlList == null || !sqlList.Any()) return;
 
@@ -70,7 +70,7 @@ namespace NeraXTools.Database.PostgreSql
 
         // ================================================================================== 2. SCALAR ==================================================================================
 
-        internal static async Task<object> ExecuteQueryScalarAsync_Core(string connectionString, string sql, int timeoutSeconds = 0, CancellationToken ct = default)
+        internal static async Task<object> ExecuteQueryScalarAsync_Core(string connectionString, string sql, CancellationToken ct, int timeoutSeconds = -1)
         {
             await using var conn = new NpgsqlConnection(connectionString);
             try
@@ -94,7 +94,7 @@ namespace NeraXTools.Database.PostgreSql
 
         // ================================================================================== 3. LIST (DTO) ==================================================================================
 
-        internal static async Task<List<T>> ExecuteQueryToListAsync_Core<T>(string connectionString, string sql, int readRowCount, int timeoutSeconds = 0, CancellationToken ct = default) where T : new()
+        internal static async Task<List<T>> ExecuteQueryToListAsync_Core<T>(string connectionString, string sql, int readRowCount, CancellationToken ct, int timeoutSeconds = -1) where T : new()
         {
             var list = new List<T>();
             await using var conn = new NpgsqlConnection(connectionString);
@@ -141,7 +141,7 @@ namespace NeraXTools.Database.PostgreSql
 
         // ================================================================================== 4. SIMPLE LIST ==================================================================================
 
-        internal static async Task<List<T>> ExecuteQueryToSimpleListAsync_Core<T>(string connectionString, string sql, int readRowCount, int timeoutSeconds = 0, CancellationToken ct = default)
+        internal static async Task<List<T>> ExecuteQueryToSimpleListAsync_Core<T>(string connectionString, string sql, int readRowCount, CancellationToken ct, int timeoutSeconds = -1)
         {
             var list = new List<T>();
             await using var conn = new NpgsqlConnection(connectionString);
@@ -180,9 +180,9 @@ namespace NeraXTools.Database.PostgreSql
         {
             return inputSeconds switch
             {
-                0 => Math.Min(Math.Max(15, commandCount * 5), 600), // داینامیک
-                < 0 => 0, // بی‌نهایت (طبق استاندار Npgsql)
-                _ => inputSeconds // مقدار دستی کاربر
+                -1 => Math.Min(Math.Max(30, commandCount * 30), 300), // داینامیک   //Max 10 Work In 1 Command
+                0 => 0, // بی‌نهایت (طبق استاندار Npgsql)
+                > 0 => inputSeconds // مقدار دستی کاربر
             };
         }
 
