@@ -25,6 +25,19 @@
             => await PostgreSql_Core.ExecuteNonQueryAsync_Core(connectionString, new List<string> { sql }, CancellationToken.None, -1);
 
         /// <summary>
+        /// Executes a single SQLFile command asynchronously.
+        /// </summary>
+        /// <param name="connectionString">The PostgreSQL connection string.</param>
+        /// <param name="sqlFile">The SQL command to execute.</param>
+        /// <example>
+        /// <![CDATA[
+        /// await db.ExecuteNonQueryAsync(connStr, "UPDATE Users SET IsActive = true WHERE Id = 1");
+        /// ]]>
+        /// </example>
+        public static async Task ExecuteNonQueryFromFileAsync(string connectionString, string sqlFile)
+            => await PostgreSql_Core.ExecuteNonQueryAsync_Core(connectionString, new List<string> { sqlFile }, CancellationToken.None, -1, isSqlFile: true);
+
+        /// <summary>
         /// Executes a single SQL command with cancellation and custom timeout.
         /// </summary>
         /// <param name="connectionString">The PostgreSQL connection string.</param>
@@ -33,6 +46,16 @@
         /// <param name="timeoutSeconds">Execution timeout (-1:Dynamic, -0: Infinite).</param>
         public static async Task ExecuteNonQueryAsync(string connectionString, string sql, CancellationToken ct, int timeoutSeconds = -1)
           => await PostgreSql_Core.ExecuteNonQueryAsync_Core(connectionString, new List<string> { sql }, ct, timeoutSeconds);
+
+        /// <summary>
+        /// Executes a single SQL File command with cancellation and custom timeout.
+        /// </summary>
+        /// <param name="connectionString">The PostgreSQL connection string.</param>
+        /// <param name="sqlFile">The SQL command to execute.</param>
+        /// <param name="ct">Cancellation token to abort the operation.</param>
+        /// <param name="timeoutSeconds">Execution timeout (-1:Dynamic, -0: Infinite).</param>
+        public static async Task ExecuteNonQueryFromFileAsync(string connectionString, string sqlFile, CancellationToken ct, int timeoutSeconds = -1)
+          => await PostgreSql_Core.ExecuteNonQueryAsync_Core(connectionString, new List<string> { sqlFile }, ct, timeoutSeconds, isSqlFile: true);
 
         /// <summary>
         /// Executes multiple SQL commands as a single transaction using params.
@@ -45,7 +68,20 @@
         /// ]]>
         /// </example>
         public static async Task ExecuteNonQueryAsync(string connectionString, params string[] sqls)
-            => await PostgreSql_Core.ExecuteNonQueryAsync_Core(connectionString, new List<string>(sqls), CancellationToken.None, -1);
+            => await PostgreSql_Core.ExecuteNonQueryAsync_Core(connectionString, sqls.ToList(), CancellationToken.None, -1);
+
+        /// <summary>
+        /// Executes multiple SQL File commands as a single transaction using params.
+        /// </summary>
+        /// <param name="connectionString">The PostgreSQL connection string.</param>
+        /// <param name="sqlFiles">Variable number of SQL commands.</param>
+        /// <example>
+        /// <![CDATA[
+        /// await db.ExecuteNonQueryAsync(connStr, "INSERT INTO Logs...", "UPDATE Stats...");
+        /// ]]>
+        /// </example>
+        public static async Task ExecuteNonQueryFromFileAsync(string connectionString, params string[] sqlFiles)
+            => await PostgreSql_Core.ExecuteNonQueryAsync_Core(connectionString, sqlFiles.ToList(), CancellationToken.None, -1, isSqlFile: true);
 
         /// <summary>
         /// Executes a list of SQL commands as a single transaction.
@@ -54,6 +90,14 @@
         /// <param name="sqlList">List of SQL commands to execute.</param>
         public static async Task ExecuteNonQueryAsync(string connectionString, List<string> sqlList)
             => await PostgreSql_Core.ExecuteNonQueryAsync_Core(connectionString, sqlList, CancellationToken.None, -1);
+
+        /// <summary>
+        /// Executes a list of SQL Files commands as a single transaction.
+        /// </summary>
+        /// <param name="connectionString">The PostgreSQL connection string.</param>
+        /// <param name="sqlFilesList">List of SQL commands to execute.</param>
+        public static async Task ExecuteNonQueryFromFileAsync(string connectionString, List<string> sqlFilesList)
+            => await PostgreSql_Core.ExecuteNonQueryAsync_Core(connectionString, sqlFilesList, CancellationToken.None, -1, isSqlFile: true);
 
         /// <summary>
         /// Executes a list of SQL commands with full control over timeout and cancellation.
@@ -65,10 +109,20 @@
         public static async Task ExecuteNonQueryAsync(string connectionString, List<string> sqlList, CancellationToken ct, int timeoutSeconds = -1)
             => await PostgreSql_Core.ExecuteNonQueryAsync_Core(connectionString, sqlList, ct, timeoutSeconds);
 
+        /// <summary>
+        /// Executes a list of SQL commands with full control over timeout and cancellation.
+        /// </summary>
+        /// <param name="connectionString">The PostgreSQL connection string.</param>
+        /// <param name="sqlFilesList">List of SQL commands.</param>
+        /// <param name="ct">Cancellation token.</param>
+        /// <param name="timeoutSeconds">Execution timeout   (-1:Dynamic, -0: Infinite).</param>
+        public static async Task ExecuteNonQueryFromFileAsync(string connectionString, List<string> sqlFilesList, CancellationToken ct, int timeoutSeconds = -1)
+            => await PostgreSql_Core.ExecuteNonQueryAsync_Core(connectionString, sqlFilesList, ct, timeoutSeconds, isSqlFile: true);
+
         // ================================================================================== 2. SCALAR WRAPPERS ==================================================================================
 
         /// <summary>
-        /// Executes query and returns the first column of the first row.
+        /// Executes query SQL and returns the first column of the first row.
         /// </summary>
         /// <param name="connectionString">The PostgreSQL connection string.</param>
         /// <param name="sql">SQL query (e.g., SELECT COUNT(*)).</param>
@@ -77,7 +131,16 @@
             => await PostgreSql_Core.ExecuteQueryScalarAsync_Core(connectionString, sql, CancellationToken.None, -1);
 
         /// <summary>
-        /// Executes scalar query with cancellation and custom timeout.
+        /// Executes query SQL File and returns the first column of the first row.
+        /// </summary>
+        /// <param name="connectionString">The PostgreSQL connection string.</param>
+        /// <param name="sqlFile">SQL query (e.g., SELECT COUNT(*)).</param>
+        /// <returns>The scalar result as an object.</returns>
+        public static async Task<object> ExecuteQueryScalarFromFileAsync(string connectionString, string sqlFile)
+            => await PostgreSql_Core.ExecuteQueryScalarAsync_Core(connectionString, sqlFile, CancellationToken.None, -1, isSqlFile: true);
+
+        /// <summary>
+        /// Executes scalar query SQL with cancellation and custom timeout.
         /// </summary>
         /// <param name="connectionString">The PostgreSQL connection string.</param>
         /// <param name="sql">SQL query.</param>
@@ -86,10 +149,20 @@
         public static async Task<object> ExecuteQueryScalarAsync(string connectionString, string sql, CancellationToken ct, int timeoutSeconds = -1)
             => await PostgreSql_Core.ExecuteQueryScalarAsync_Core(connectionString, sql, ct, timeoutSeconds);
 
+        /// <summary>
+        /// Executes scalar query SQL File with cancellation and custom timeout.
+        /// </summary>
+        /// <param name="connectionString">The PostgreSQL connection string.</param>
+        /// <param name="sqlFile">SQL query.</param>
+        /// <param name="ct">Cancellation token.</param>
+        /// <param name="timeoutSeconds">Execution timeout (-1:Dynamic, -0: Infinite).</param>
+        public static async Task<object> ExecuteQueryScalarFromFileAsync(string connectionString, string sqlFile, CancellationToken ct, int timeoutSeconds = -1)
+            => await PostgreSql_Core.ExecuteQueryScalarAsync_Core(connectionString, sqlFile, ct, timeoutSeconds, isSqlFile: true);
+
         // ================================================================================== 3. OBJECT LIST WRAPPERS (DTO) ==================================================================================
 
         /// <summary>
-        /// Executes query and maps results to a list of DTO objects.
+        /// Executes query SQL and maps results to a list of DTO objects.
         /// </summary>
         /// <typeparam name="T">The type of object to map rows to (must have a parameterless constructor).</typeparam>
         /// <param name="connectionString">The PostgreSQL connection string.</param>
@@ -103,7 +176,21 @@
             => await PostgreSql_Core.ExecuteQueryToListAsync_Core<T>(connectionString, sql, 0, CancellationToken.None, -1);
 
         /// <summary>
-        /// Executes query and maps results with advanced configuration.
+        /// Executes query SQL File and maps results to a list of DTO objects.
+        /// </summary>
+        /// <typeparam name="T">The type of object to map rows to (must have a parameterless constructor).</typeparam>
+        /// <param name="connectionString">The PostgreSQL connection string.</param>
+        /// <param name="sqlFile">SQL query.</param>
+        /// <example>
+        /// <![CDATA[
+        /// var users = await db.ExecuteQueryToListAsync<UserDto>(connStr, "SELECT * FROM Users");
+        /// ]]>
+        /// </example>
+        public static async Task<List<T>> ExecuteQueryToListFromFileAsync<T>(string connectionString, string sqlFile) where T : new()
+            => await PostgreSql_Core.ExecuteQueryToListAsync_Core<T>(connectionString, sqlFile, 0, CancellationToken.None, -1, isSqlFile: true);
+
+        /// <summary>
+        /// Executes query SQL and maps results with advanced configuration.
         /// </summary>
         /// <typeparam name="T">Target DTO type.</typeparam>
         /// <param name="connectionString">The PostgreSQL connection string.</param>
@@ -114,10 +201,22 @@
         public static async Task<List<T>> ExecuteQueryToListAsync<T>(string connectionString, string sql, int readRowCount, CancellationToken ct, int timeoutSeconds = -1) where T : new()
             => await PostgreSql_Core.ExecuteQueryToListAsync_Core<T>(connectionString, sql, readRowCount, ct, timeoutSeconds);
 
+        /// <summary>
+        /// Executes query SQL File and maps results with advanced configuration.
+        /// </summary>
+        /// <typeparam name="T">Target DTO type.</typeparam>
+        /// <param name="connectionString">The PostgreSQL connection string.</param>
+        /// <param name="sqlFile">SQL query.</param>
+        /// <param name="readRowCount">Limit the number of rows to read (0 for all).</param>
+        /// <param name="ct">Cancellation token.</param>
+        /// <param name="timeoutSeconds">Execution timeout(-1:Dynamic, -0: Infinite).</param>
+        public static async Task<List<T>> ExecuteQueryToListFromFileAsync<T>(string connectionString, string sqlFile, int readRowCount, CancellationToken ct, int timeoutSeconds = -1) where T : new()
+            => await PostgreSql_Core.ExecuteQueryToListAsync_Core<T>(connectionString, sqlFile, readRowCount, ct, timeoutSeconds, isSqlFile: true);
+
         // ================================================================================== 4. SIMPLE LIST WRAPPERS ==================================================================================
 
         /// <summary>
-        /// Executes query and returns a list of simple types (e.g., string, int, Guid).
+        /// Executes query SQL and returns a list of simple types (e.g., string, int, Guid).
         /// </summary>
         /// <typeparam name="T">The simple type to return.</typeparam>
         /// <param name="connectionString">The PostgreSQL connection string.</param>
@@ -131,7 +230,21 @@
             => await PostgreSql_Core.ExecuteQueryToSimpleListAsync_Core<T>(connectionString, sql, 0, CancellationToken.None, -1);
 
         /// <summary>
-        /// Executes simple list query with advanced configuration.
+        /// Executes query SQL File and returns a list of simple types (e.g., string, int, Guid).
+        /// </summary>
+        /// <typeparam name="T">The simple type to return.</typeparam>
+        /// <param name="connectionString">The PostgreSQL connection string.</param>
+        /// <param name="sqlFile">SQL query selecting a single column.</param>
+        /// <example>
+        /// <![CDATA[
+        /// List<string> names = await db.ExecuteQueryToSimpleListAsync<string>(connStr, "SELECT Name FROM Users");
+        /// ]]>
+        /// </example>
+        public static async Task<List<T>> ExecuteQueryToSimpleListFromFileAsync<T>(string connectionString, string sqlFile)
+            => await PostgreSql_Core.ExecuteQueryToSimpleListAsync_Core<T>(connectionString, sqlFile, 0, CancellationToken.None, -1, isSqlFile: true);
+
+        /// <summary>
+        /// Executes simple list query SQL with advanced configuration.
         /// </summary>
         /// <typeparam name="T">Target simple type.</typeparam>
         /// <param name="connectionString">The PostgreSQL connection string.</param>
@@ -141,5 +254,17 @@
         /// <param name="timeoutSeconds">Execution timeout (-1:Dynamic, -0: Infinite).</param>
         public static async Task<List<T>> ExecuteQueryToSimpleListAsync<T>(string connectionString, string sql, int readRowCount, CancellationToken ct, int timeoutSeconds = -1)
             => await PostgreSql_Core.ExecuteQueryToSimpleListAsync_Core<T>(connectionString, sql, readRowCount, ct, timeoutSeconds);
+
+        /// <summary>
+        /// Executes simple list query SQL File with advanced configuration.
+        /// </summary>
+        /// <typeparam name="T">Target simple type.</typeparam>
+        /// <param name="connectionString">The PostgreSQL connection string.</param>
+        /// <param name="sqlFile">SQL query.</param>
+        /// <param name="readRowCount">Limit the number of rows to read.</param>
+        /// <param name="ct">Cancellation token.</param>
+        /// <param name="timeoutSeconds">Execution timeout (-1:Dynamic, -0: Infinite).</param>
+        public static async Task<List<T>> ExecuteQueryToSimpleListFromFileAsync<T>(string connectionString, string sqlFile, int readRowCount, CancellationToken ct, int timeoutSeconds = -1)
+            => await PostgreSql_Core.ExecuteQueryToSimpleListAsync_Core<T>(connectionString, sqlFile, readRowCount, ct, timeoutSeconds, isSqlFile: true);
     }
 }

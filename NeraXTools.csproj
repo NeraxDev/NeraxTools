@@ -8,7 +8,7 @@
 	<GenerateDocumentationFile>true</GenerateDocumentationFile>
 
 	<PackageId>NeraXTools</PackageId>
-	  <Version>0.1.2-build.2</Version>
+	  <Version>0.1.2-build.3</Version>
 	<Authors>NeraX Studio - Arian</Authors>
 	<Description>NeraX Tools with Auto-Copy Assets</Description>
 

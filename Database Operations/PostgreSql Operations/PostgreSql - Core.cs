@@ -12,7 +12,7 @@ namespace NeraXTools.Database.PostgreSql
     {
         // ================================================================================== 1. NON-QUERY ==================================================================================
 
-        internal static async Task ExecuteNonQueryAsync_Core(string connectionString, List<string> sqlList, CancellationToken ct, int timeoutSeconds = -1)
+        internal static async Task ExecuteNonQueryAsync_Core(string connectionString, List<string> sqlList, CancellationToken ct, int timeoutSeconds = -1, bool isSqlFile = false)
         {
             if (sqlList == null || !sqlList.Any()) return;
 
@@ -22,17 +22,23 @@ namespace NeraXTools.Database.PostgreSql
                 try
                 {
                     var sb = new StringBuilder();
-                    sb.AppendLine("BEGIN;");
+                    sb.AppendLine("BEGIN;\n");
                     int actualCommandCount = 0;
-                    foreach (var sql in sqlList)
+                    if (isSqlFile)
                     {
-                        if (string.IsNullOrWhiteSpace(sql)) continue;
-                        actualCommandCount++;
-                        var trimmed = sql.Trim();
-                        sb.Append(trimmed);
-                        if (!trimmed.EndsWith(";")) sb.Append(";");
-                        sb.AppendLine();
+                        (string sql, actualCommandCount) = await ReadSqlFiles(sqlList);
+                        sb.Append(sql);
                     }
+                    else
+                        foreach (var sql in sqlList)
+                        {
+                            if (string.IsNullOrWhiteSpace(sql)) continue;
+                            actualCommandCount++;
+                            var trimmed = sql.Trim();
+                            sb.Append(trimmed);
+                            if (!trimmed.EndsWith(";")) sb.Append(";");
+                            sb.AppendLine();
+                        }
                     sb.AppendLine("COMMIT;");
 
                     if (actualCommandCount == 0) return;
@@ -70,7 +76,7 @@ namespace NeraXTools.Database.PostgreSql
 
         // ================================================================================== 2. SCALAR ==================================================================================
 
-        internal static async Task<object> ExecuteQueryScalarAsync_Core(string connectionString, string sql, CancellationToken ct, int timeoutSeconds = -1)
+        internal static async Task<object> ExecuteQueryScalarAsync_Core(string connectionString, string sql, CancellationToken ct, int timeoutSeconds = -1, bool isSqlFile = false)
         {
             await using var conn = new NpgsqlConnection(connectionString);
             try
@@ -80,6 +86,8 @@ namespace NeraXTools.Database.PostgreSql
                 int finalTimeout = CalculateTimeout_Core(timeoutSeconds, 1);
                 Logger.logForThisTool($"Scalar Execution: {TruncateLog_Core(sql)} (Timeout: {finalTimeout}s)", eLogType.Info);
 
+                if (isSqlFile)
+                    (sql, _) = await ReadSqlFiles(new List<string> { sql });
                 await using var cmd = new NpgsqlCommand(sql, conn);
                 cmd.CommandTimeout = finalTimeout;
 
@@ -94,7 +102,7 @@ namespace NeraXTools.Database.PostgreSql
 
         // ================================================================================== 3. LIST (DTO) ==================================================================================
 
-        internal static async Task<List<T>> ExecuteQueryToListAsync_Core<T>(string connectionString, string sql, int readRowCount, CancellationToken ct, int timeoutSeconds = -1) where T : new()
+        internal static async Task<List<T>> ExecuteQueryToListAsync_Core<T>(string connectionString, string sql, int readRowCount, CancellationToken ct, int timeoutSeconds = -1, bool isSqlFile = false) where T : new()
         {
             var list = new List<T>();
             await using var conn = new NpgsqlConnection(connectionString);
@@ -103,7 +111,8 @@ namespace NeraXTools.Database.PostgreSql
                 await conn.OpenAsync(ct);
 
                 int finalTimeout = CalculateTimeout_Core(timeoutSeconds, 1);
-
+                if (isSqlFile)
+                    (sql, _) = await ReadSqlFiles(new List<string> { sql });
                 await using var cmd = new NpgsqlCommand(sql, conn);
                 cmd.CommandTimeout = finalTimeout;
 
@@ -141,7 +150,7 @@ namespace NeraXTools.Database.PostgreSql
 
         // ================================================================================== 4. SIMPLE LIST ==================================================================================
 
-        internal static async Task<List<T>> ExecuteQueryToSimpleListAsync_Core<T>(string connectionString, string sql, int readRowCount, CancellationToken ct, int timeoutSeconds = -1)
+        internal static async Task<List<T>> ExecuteQueryToSimpleListAsync_Core<T>(string connectionString, string sql, int readRowCount, CancellationToken ct, int timeoutSeconds = -1, bool isSqlFile = false)
         {
             var list = new List<T>();
             await using var conn = new NpgsqlConnection(connectionString);
@@ -150,7 +159,8 @@ namespace NeraXTools.Database.PostgreSql
                 await conn.OpenAsync(ct);
 
                 int finalTimeout = CalculateTimeout_Core(timeoutSeconds, 1);
-
+                if (isSqlFile)
+                    (sql, _) = await ReadSqlFiles(new List<string> { sql });
                 await using var cmd = new NpgsqlCommand(sql, conn);
                 cmd.CommandTimeout = finalTimeout;
 
@@ -175,6 +185,25 @@ namespace NeraXTools.Database.PostgreSql
         }
 
         // ================================================================================== HELPERS ==================================================================================
+        private static async Task<(string, int)> ReadSqlFiles(List<string> sqlPaths)
+        {
+            var sb = new StringBuilder();
+            int actualCommandCount = 0;
+            CancellationTokenSource cts;
+            string basePath = AppDomain.CurrentDomain.BaseDirectory;
+            foreach (var path in sqlPaths)
+            {
+                if (string.IsNullOrWhiteSpace(path)) continue;
+                cts = new CancellationTokenSource(TimeSpan.FromSeconds(5));
+                string actualPath = Path.Combine(basePath, path);
+                string sql = await File.ReadAllTextAsync(actualPath, cts.Token);
+                sb.Append(sql);
+                if (!sql.EndsWith(";")) sb.Append(";");
+                sb.Append("\n");
+                actualCommandCount++;
+            }
+            return (sb.ToString(), actualCommandCount);
+        }
 
         private static int CalculateTimeout_Core(int inputSeconds, int commandCount)
         {
