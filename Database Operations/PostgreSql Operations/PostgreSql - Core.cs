@@ -184,6 +184,40 @@ namespace NeraXTools.Database.PostgreSql
             }
         }
 
+        //================================================================================= 5. SCALAR PARAMETRIC ==================================================================================
+        internal static async Task<T> ExecuteScalarAsync_Core<T>(string connectionString, string sql, CancellationToken ct, int timeoutSeconds = -1, params NpgsqlParameter[] parameters)
+        {
+            await using var conn = new NpgsqlConnection(connectionString);
+            try
+            {
+                await conn.OpenAsync(ct);
+                int finalTimeout = CalculateTimeout_Core(timeoutSeconds, 1);
+
+                await using var cmd = new NpgsqlCommand(sql, conn);
+                cmd.CommandTimeout = finalTimeout;
+                if (parameters != null) cmd.Parameters.AddRange(parameters);
+
+                var result = await cmd.ExecuteScalarAsync(ct);
+
+                if (result == null || result == DBNull.Value) return default;
+                return (T)ChangeTypeForProperty_Core(result, typeof(T));
+            }
+            catch (Exception ex)
+            {
+                Logger.logForThisTool($"Scalar Parametric Error: {ex.Message}", eLogType.Exception);
+                throw;
+            }
+        }
+
+        //================================================================= 6. EXECUTE FUNCTION ==================================================================================
+        public static async Task<T> ExecuteFunctionAsync<T>(string connectionString, string functionName, CancellationToken ct, int timeOut, params NpgsqlParameter[] parameters)
+        {
+            // EXp: SELECT * FROM func(@p1, @p2)
+            string paramList = string.Join(", ", parameters.Select(p => p.ParameterName));
+            string sql = $"SELECT {functionName}({paramList});";
+            return await PostgreSql_Core.ExecuteScalarAsync_Core<T>(connectionString, sql, ct, timeOut, parameters); // باید با وارپرش جایگزینش کنم
+        }
+
         // ================================================================================== HELPERS ==================================================================================
         private static async Task<(string, int)> ReadSqlFiles(List<string> sqlPaths)
         {

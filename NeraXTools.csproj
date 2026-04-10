@@ -49,6 +49,7 @@
 
   <ItemGroup>
     <PackageReference Include="Npgsql" Version="10.0.2" />
+    <PackageReference Include="Supabase" Version="1.1.1" />
   </ItemGroup>
   <!--
 	Copy generated NuGet packages to one or more folders after packing.
@@ -67,10 +68,7 @@
 
 		<Message Importance="high" Text="Copying packages: @(BuiltPackages) to %(PackageDestination.Identity)" />
 
-		<Copy
-		  SourceFiles="@(BuiltPackages)"
-		  DestinationFolder="%(PackageDestination.Identity)"
-		  SkipUnchangedFiles="true" />
+		<Copy SourceFiles="@(BuiltPackages)" DestinationFolder="%(PackageDestination.Identity)" SkipUnchangedFiles="true" />
 	</Target>
 
 </Project>
