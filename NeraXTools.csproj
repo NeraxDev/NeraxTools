@@ -70,5 +70,4 @@
 
 		<Copy SourceFiles="@(BuiltPackages)" DestinationFolder="%(PackageDestination.Identity)" SkipUnchangedFiles="true" />
 	</Target>
-
 </Project>
