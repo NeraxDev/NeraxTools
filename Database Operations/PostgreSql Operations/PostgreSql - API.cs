@@ -9,7 +9,7 @@
     /// </remarks>
     public static class PostgreSql
     {
-        // ================================================================================== 1. NON-QUERY WRAPPERS ==================================================================================
+        #region ================================================================================== 1. NON-QUERY WRAPPERS ==================================================================================
 
         /// <summary>
         /// Executes a single SQL command asynchronously.
@@ -119,7 +119,9 @@
         public static async Task ExecuteNonQueryFromFileAsync(string connectionString, List<string> sqlFilesList, CancellationToken ct, int timeoutSeconds = -1)
             => await PostgreSql_Core.ExecuteNonQueryAsync_Core(connectionString, sqlFilesList, ct, timeoutSeconds, isSqlFile: true);
 
-        // ================================================================================== 2. SCALAR WRAPPERS ==================================================================================
+        #endregion ================================================================================== 1. NON-QUERY WRAPPERS ==================================================================================
+
+        #region ================================================================================== 2. SCALAR WRAPPERS ==================================================================================
 
         /// <summary>
         /// Executes query SQL and returns the first column of the first row.
@@ -159,7 +161,9 @@
         public static async Task<object> ExecuteQueryScalarFromFileAsync(string connectionString, string sqlFile, CancellationToken ct, int timeoutSeconds = -1)
             => await PostgreSql_Core.ExecuteQueryScalarAsync_Core(connectionString, sqlFile, ct, timeoutSeconds, isSqlFile: true);
 
-        // ================================================================================== 3. OBJECT LIST WRAPPERS (DTO) ==================================================================================
+        #endregion ================================================================================== 2. SCALAR WRAPPERS ==================================================================================
+
+        #region ================================================================================== 3. OBJECT LIST WRAPPERS (DTO) ==================================================================================
 
         /// <summary>
         /// Executes query SQL and maps results to a list of DTO objects.
@@ -213,7 +217,9 @@
         public static async Task<List<T>> ExecuteQueryToListFromFileAsync<T>(string connectionString, string sqlFile, int readRowCount, CancellationToken ct, int timeoutSeconds = -1) where T : new()
             => await PostgreSql_Core.ExecuteQueryToListAsync_Core<T>(connectionString, sqlFile, readRowCount, ct, timeoutSeconds, isSqlFile: true);
 
-        // ================================================================================== 4. SIMPLE LIST WRAPPERS ==================================================================================
+        #endregion ================================================================================== 3. OBJECT LIST WRAPPERS (DTO) ==================================================================================
+
+        #region ================================================================================== 4. SIMPLE LIST WRAPPERS ==================================================================================
 
         /// <summary>
         /// Executes query SQL and returns a list of simple types (e.g., string, int, Guid).
@@ -266,5 +272,7 @@
         /// <param name="timeoutSeconds">Execution timeout (-1:Dynamic, -0: Infinite).</param>
         public static async Task<List<T>> ExecuteQueryToSimpleListFromFileAsync<T>(string connectionString, string sqlFile, int readRowCount, CancellationToken ct, int timeoutSeconds = -1)
             => await PostgreSql_Core.ExecuteQueryToSimpleListAsync_Core<T>(connectionString, sqlFile, readRowCount, ct, timeoutSeconds, isSqlFile: true);
+
+        #endregion ================================================================================== 4. SIMPLE LIST WRAPPERS ==================================================================================
     }
 }
