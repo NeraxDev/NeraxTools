@@ -1,8 +1,26 @@
-﻿// HACK: THE EXECUTE BATCH (PROCEDURE OR QUERY) SECTION WAS GENERATED VIA AI.
-// IT HAS NOT BEEN FULLY VERIFIED OR REVIEWS YET.
-// WRAPPERS FOR THIS SECTION IN THE HIGH-LEVEL API ARE PENDING IMPLEMENTATION.
+﻿/* TODO LIST - NERAX TOOLS (Database Engine)
+  -----------------------------------------------------------------------------------------
+  1. [PERFORMANCE] Property Caching:
+     در متد ExecuteQueryToListAsync_Core، ویژگی‌های تیپ T را با ConcurrentDictionary کش کن.
+     رفلکشن در هر بار فراخوانی، پرفورمنس سیستم POS را در گزارشات سنگین پایین می‌آورد.
+
+  2. [ARCHITECTURE] Hybrid Infrastructure (Interface-based):
+     ایجاد IPostgreSqlEngine و تبدیل هسته به Instance-based.
+     این کار اجازه می‌دهد بدون تغییر در لاجیک، قابلیت Unit Test و Dependency Injection فراهم شود.
+     (خوشبختانه به دلیل معماری متمرکز فعلی، این تغییر روی DTOها و فرمت خروجی اثری ندارد).
+
+  3. [FILE SYSTEM] Path Virtualization:
+     در متد ReadSqlFiles، به جای استفاده مستقیم از BaseDirectory، امکان تزریق مسیر (Path Injection)
+     فراهم شود تا کتابخانه در محیط‌های مختلف و خارج از پوشه جاری هم کار کند.
+
+  4. [CLEAN CODE] Logic Separation:
+     انتقال متدهای SafeConvert و Mapping به یک کلاس اختصاصی (DataMapper) جهت رعایت اصل SRP.
+  -----------------------------------------------------------------------------------------
+*/
+
 using NeraXTools.LogManager;
 using Npgsql;
+using System.Collections;
 using System.Data;
 using System.Text;
 
@@ -221,18 +239,23 @@ namespace NeraXTools.Database.PostgreSql
         {
             var sb = new StringBuilder();
             int actualCommandCount = 0;
-            CancellationTokenSource cts;
             string basePath = AppDomain.CurrentDomain.BaseDirectory;
+
             foreach (var path in sqlPaths)
             {
                 if (string.IsNullOrWhiteSpace(path)) continue;
-                cts = new CancellationTokenSource(TimeSpan.FromSeconds(5));
-                string actualPath = Path.Combine(basePath, path);
-                string sql = await File.ReadAllTextAsync(actualPath, cts.Token);
-                sb.Append(sql);
-                if (!sql.EndsWith(";")) sb.Append(";");
-                sb.Append("\n");
-                actualCommandCount++;
+
+                using (var cts = new CancellationTokenSource(TimeSpan.FromSeconds(5)))
+                {
+                    string actualPath = Path.Combine(basePath, path);
+                    if (!File.Exists(actualPath)) continue;
+
+                    string sql = await File.ReadAllTextAsync(actualPath, cts.Token);
+                    sb.Append(sql);
+                    if (!sql.TrimEnd().EndsWith(";")) sb.Append(";");
+                    sb.Append("\n");
+                    actualCommandCount++;
+                }
             }
             return (sb.ToString(), actualCommandCount);
         }
@@ -286,7 +309,7 @@ namespace NeraXTools.Database.PostgreSql
 
         #endregion ================================================================= EXECUTE Sql Files  ==================================================================================
 
-        #region ========================================================================= EXECUTE FUNCTIONs ==================================================================================
+        #region ========================================================================= EXECUTE FUNCTION Or Procedure ==================================================================================
 
         //================================================================================= 6. EXECUTE BATCH (PROCEDURE OR QUERY) ==================================================================================
         internal static async Task<List<ResultPostgreSqlDTO<object>>> ExecuteBatch_Core(
@@ -302,20 +325,17 @@ namespace NeraXTools.Database.PostgreSql
             {
                 var resultItem = new ResultPostgreSqlDTO<object> { Identifier = req.QueryOrProcedureName };
 
-                // تصمیم‌گیری برای پارامترهای اجرایی (Priority: Specific > Global)
-                var connToUse = req.SpecificConnectionString ?? globalConnString;
+                var connToUse = req.ConnectionString ?? globalConnString;
                 var ctToUse = (req.ct != CancellationToken.None) ? req.ct : (globalCt ?? CancellationToken.None);
                 var timeoutToUse = (req.TimeoutFromSec != -1) ? req.TimeoutFromSec : (globalTimeout ?? -1);
 
                 try
                 {
-                    // فراخوانی متد اصلی با استفاده از Reflection برای هندل کردن ReturnType داینامیک
-                    // ما اینجا از متد جنریک داخلی استفاده می‌کنیم
                     var data = await ExecuteSingle_Core(
                         connToUse,
                         req.QueryOrProcedureName,
-                        req.ReturnType, // نوع خروجی که در DTO تعیین شده
-                        req.IsStoredProcedure,
+                        req.ReturnType,
+                        req.QueryType,
                         ctToUse,
                         timeoutToUse,
                         req.Parameters);
@@ -327,10 +347,11 @@ namespace NeraXTools.Database.PostgreSql
                 {
                     resultItem.IsSuccess = false;
                     resultItem.ErrorMessage = ex.Message;
-                    // Logger.Log... (متد لاگر خودت را اینجا صدا بزن)
+                    Logger.logForThisTool($"Batch Item Error (Identifier: {req.QueryOrProcedureName}): {ex.Message}", eLogType.Exception);
                 }
                 finalResults.Add(resultItem);
             }
+            Logger.logForThisTool($"Batch Execution Completed: {finalResults.Count} items processed.", eLogType.Info);
             return finalResults;
         }
 
@@ -341,7 +362,7 @@ namespace NeraXTools.Database.PostgreSql
             string connectionString,
             string sqlOrProc,
             Type returnType,
-            bool isProcedure,
+            QueryType queryType,
             CancellationToken ct,
             int timeoutSec,
             Dictionary<string, object> parameters)
@@ -351,16 +372,22 @@ namespace NeraXTools.Database.PostgreSql
                 await conn.OpenAsync(ct);
                 using (var cmd = new Npgsql.NpgsqlCommand(sqlOrProc, conn))
                 {
-                    cmd.CommandType = isProcedure ? CommandType.StoredProcedure : CommandType.Text;
                     if (timeoutSec >= 0) cmd.CommandTimeout = timeoutSec;
-
+                    cmd.CommandType = CommandType.Text;
+                    string paramPlaceholder = parameters != null && parameters.Any()
+                        ? string.Join(", ", parameters.Keys.Select(p => "@" + p))
+                        : string.Empty;
+                    if (queryType == QueryType.Procedure)
+                        cmd.CommandText = $"CALL {sqlOrProc}({paramPlaceholder})";
+                    else if (queryType == QueryType.Query)
+                        cmd.CommandText = $"SELECT * FROM {sqlOrProc}({paramPlaceholder})";
                     if (parameters != null)
                     {
                         foreach (var p in parameters)
+                        {
                             cmd.Parameters.AddWithValue(p.Key, p.Value ?? DBNull.Value);
+                        }
                     }
-
-                    // اگر نوع بازگشتی void یا شبیه آن نبود (اجرای کوئری)
                     if (returnType == typeof(void))
                     {
                         return await cmd.ExecuteNonQueryAsync(ct);
@@ -368,80 +395,135 @@ namespace NeraXTools.Database.PostgreSql
 
                     using (var reader = await cmd.ExecuteReaderAsync(ct))
                     {
-                        // اینجا منطق مپینگ DTO یا SimpleType قرار می‌گیرد
-                        // برای سادگی در لایه Core، خروجی را به صورت لیست برمی‌گردانیم
                         return await MapReaderToDynamicList(reader, returnType, ct);
                     }
                 }
             }
         }
 
-        private static async Task<object> MapReaderToDynamicList(Npgsql.NpgsqlDataReader reader, Type returnType, CancellationToken ct)
+        private static async Task<object> MapReaderToDynamicList(NpgsqlDataReader reader, Type returnType, CancellationToken ct)
         {
-            // 1. ایجاد لیست جنریک بر اساس ReturnType
-            var listType = typeof(List<>).MakeGenericType(returnType);
-            var results = (System.Collections.IList)Activator.CreateInstance(listType);
-
-            // 2. بررسی ساده بودن نوع (تعمیم یافته برای Nullable ها و Enum ها)
-            bool isSimpleType = returnType.IsPrimitive ||
-                                returnType == typeof(string) ||
-                                returnType == typeof(decimal) ||
-                                returnType == typeof(DateTime) ||
-                                returnType == typeof(Guid) ||
-                                returnType.IsEnum ||
-                                Nullable.GetUnderlyingType(returnType) != null;
-
-            // 3. کش کردن پراپرتی‌ها قبل از ورود به حلقه برای سرعت بالا
-            var props = !isSimpleType ? returnType.GetProperties() : null;
-
-            while (await reader.ReadAsync(ct))
+            try
             {
-                if (isSimpleType)
-                {
-                    var val = reader.IsDBNull(0) ? null : reader.GetValue(0);
-                    results.Add(SafeConvert(val, returnType));
-                }
-                else
-                {
-                    var obj = Activator.CreateInstance(returnType);
-                    for (int i = 0; i < reader.FieldCount; i++)
-                    {
-                        var colName = reader.GetName(i);
-                        var prop = props.FirstOrDefault(p => string.Equals(p.Name, colName, StringComparison.OrdinalIgnoreCase));
+                var listType = typeof(List<>).MakeGenericType(returnType);
+                var results = (IList)Activator.CreateInstance(listType);
 
-                        if (prop != null && !reader.IsDBNull(i))
-                        {
-                            var val = reader.GetValue(i);
-                            prop.SetValue(obj, SafeConvert(val, prop.PropertyType));
-                        }
+                bool isSimpleType = returnType.IsPrimitive ||
+                                    returnType == typeof(string) ||
+                                    returnType == typeof(decimal) ||
+                                    returnType == typeof(DateTime) ||
+                                    returnType == typeof(Guid) ||
+                                    returnType.IsEnum ||
+                                    //
+                                    Nullable.GetUnderlyingType(returnType) != null;
+
+                var props = !isSimpleType ? returnType.GetProperties() : null;
+
+                while (await reader.ReadAsync(ct))
+                {
+                    if (isSimpleType)
+                    {
+                        var val = reader.IsDBNull(0) ? null : reader.GetValue(0);
+                        results.Add(SafeConvert(val, returnType));
                     }
-                    results.Add(obj);
+                    else
+                    {
+                        var obj = Activator.CreateInstance(returnType);
+                        for (int i = 0; i < reader.FieldCount; i++)
+                        {
+                            var colName = reader.GetName(i);
+                            var prop = props.FirstOrDefault(p => string.Equals(p.Name, colName, StringComparison.OrdinalIgnoreCase));
+
+                            if (prop != null && !reader.IsDBNull(i))
+                            {
+                                var val = reader.GetValue(i);
+                                prop.SetValue(obj, SafeConvert(val, prop.PropertyType));
+                            }
+                        }
+                        results.Add(obj);
+                    }
                 }
+                return results;
             }
-            return results;
+            catch (Exception ex)
+            {
+                Logger.logForThisTool($"Mapping Error: {ex.Message}", eLogType.Exception);
+                throw;
+            }
         }
 
-        /// <summary>
-        /// متد کمکی برای تبدیل امن انواع دیتابیس به سی‌شارپ (هندل کردن Enum و Nullable)
-        /// </summary>
         private static object SafeConvert(object value, Type targetType)
         {
-            if (value == null || value == DBNull.Value) return null;
-
-            var underlyingType = Nullable.GetUnderlyingType(targetType) ?? targetType;
-
-            if (underlyingType.IsEnum)
+            try
             {
-                return Enum.IsDefined(underlyingType, value)
-                       ? Enum.ToObject(underlyingType, value)
-                       : value;
-            }
+                // DBNull.Value --> Convert Null to null
+                if (value == null || value == DBNull.Value) return null;
+                // ?int -> int or null -> int
+                var underlyingType = Nullable.GetUnderlyingType(targetType) ?? targetType;
 
-            return Convert.ChangeType(value, underlyingType);
+                if (underlyingType.IsEnum)
+                {
+                    return Enum.IsDefined(underlyingType, value)
+                           ? Enum.ToObject(underlyingType, value)
+                           : value;
+                }
+
+                return Convert.ChangeType(value, underlyingType);
+            }
+            catch (Exception)
+            {
+                Logger.logForThisTool($"Conversion Error: Unable to convert value '{value}' to type '{targetType.Name}'. Returning original value.", eLogType.Warning);
+                throw;
+            }
         }
 
         #endregion ================================================================================== HELPERS ==================================================================================
 
-        #endregion ========================================================================= EXECUTE FUNCTIONs ==================================================================================
+        #region============================================================================ Core_APIs ============================================
+
+        internal static async Task<T> UnifySingleResult_Core<T>(string conn, PostgreSqlDTO req)
+        {
+            var batchResults = await ExecuteBatch_Core(conn, null, null, req);
+            var firstResult = batchResults.FirstOrDefault();
+
+            if (firstResult == null || !firstResult.IsSuccess)
+                throw new Exception(firstResult?.ErrorMessage ?? "Execution failed.");
+
+            try
+            {
+                // در متد Core ما خروجی همیشه List<T> است، پس اولین خانه لیست را برمی‌گردانیم
+                var list = (System.Collections.IList)firstResult.Result;
+                if (list == null || list.Count == 0) return default;
+                return (T)list[0];
+            }
+            catch (Exception ex)
+            {
+                Logger.logForThisTool($"Casting Error in {req.QueryOrProcedureName}: {ex.Message}", eLogType.Exception);
+                throw;
+            }
+        }
+
+        internal static async Task<List<T>> UnifyListResult_Core<T>(string conn, PostgreSqlDTO req)
+        {
+            var batchResults = await ExecuteBatch_Core(conn, null, null, req);
+            var firstResult = batchResults.FirstOrDefault();
+
+            if (firstResult == null || !firstResult.IsSuccess)
+                throw new Exception(firstResult?.ErrorMessage ?? "Execution failed.");
+
+            try
+            {
+                return (List<T>)firstResult.Result;
+            }
+            catch (Exception ex)
+            {
+                Logger.logForThisTool($"Casting Error in {req.QueryOrProcedureName}: {ex.Message}", eLogType.Exception);
+                throw;
+            }
+        }
+
+        #endregion ========================================================================= EXECUTE FUNCTION Or Procedure ==================================================================================
+
+        #endregion ========================================================================= EXECUTE FUNCTION ==================================================================================
     }
 }

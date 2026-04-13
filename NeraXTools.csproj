@@ -8,7 +8,8 @@
 	<GenerateDocumentationFile>true</GenerateDocumentationFile>
 
 	<PackageId>NeraXTools</PackageId>
-	  <Version>0.1.2-build.5</Version>
+	  <!--<Version>0.1.2-build.5</Version>-->
+	  <Version>0.1.3</Version>
 	<Authors>NeraX Studio</Authors>
 	<Description>General-purpose developer tools and utilities.</Description>
 
