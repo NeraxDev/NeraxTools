@@ -17,7 +17,7 @@
 	<IncludeContentInPack>true</IncludeContentInPack>
 	<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
-
+  
   <ItemGroup>
 	<Compile Remove="LogManager\Apps\**\*.cs" />
 	<Compile Remove="TaskManager\Apps\**\*.cs" />

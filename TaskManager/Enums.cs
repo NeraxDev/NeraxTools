@@ -28,19 +28,19 @@
     public enum ePriorityLevel
     {
         /// <summary>Highest priority tasks</summary>
-        HighLevel,
+        HighLevel = 1,
 
         /// <summary>Medium priority tasks</summary>
-        MidLevel,
+        MidLevel = 2,
 
         /// <summary>Low priority tasks</summary>
-        LowLevel,
+        LowLevel = 3,
 
         /// <summary>Tasks that should execute at end of queue</summary>
-        EndLevel,
+        EndLevel = 4,
 
         /// <summary>Tasks that should execute at beginning of queue</summary>
-        StartLevel
+        StartLevel = 0
     }
 
     public enum eFrameworkPriorityLevel

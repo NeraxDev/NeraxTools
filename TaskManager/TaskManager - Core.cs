@@ -527,5 +527,5 @@ namespace NeraXTools.TaskManager
                     return eFrameworkPriorityLevel.StartLevel;
             }
         }
-    } // end of Folder_Ops class
-} // end of NeraXTools name
+    } // end of class
+} // end of NeraXTools namespace
