@@ -49,8 +49,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Npgsql" Version="10.0.2" />
-    <PackageReference Include="Supabase" Version="1.1.1" />
+    <PackageReference Include="Npgsql" Version="11.0.0" />
+    <PackageReference Include="Supabase" Version="8.13.0" />
   </ItemGroup>
   <!--
 	Copy generated NuGet packages to one or more folders after packing.
