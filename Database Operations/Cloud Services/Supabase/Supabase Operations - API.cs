@@ -41,7 +41,7 @@
         /// <typeparam name="T">The expected return type.</typeparam>
         /// <param name="client">The Supabase client instance.</param>
         /// <param name="func">The database function name.</param>
-        /// <param name="ct">The cancellation token to observe while waiting for the task to complete.</param>
+        /// <param name="ct">Cancels the waiting operation without necessarily aborting the underlying HTTP request. The Supabase RPC API (v8.13.0) does not expose a <see cref="CancellationToken"/> parameter. For actual HTTP request cancellation, configure <c>ClientOptions.Timeout</c> instead.</param>
         /// <example>
         /// <code><![CDATA[
         /// CancellationTokenSource cts = new CancellationTokenSource();
@@ -57,7 +57,7 @@
         /// <typeparam name="T">The expected return type.</typeparam>
         /// <param name="client">The Supabase client instance.</param>
         /// <param name="func">The database function name.</param>
-        /// <param name="ct">The cancellation token.</param>
+        /// <param name="ct">Cancels the waiting operation without necessarily aborting the underlying HTTP request. The Supabase RPC API (v8.13.0) does not expose a <see cref="CancellationToken"/> parameter. For actual HTTP request cancellation, configure <c>ClientOptions.Timeout</c> instead.</param>
         /// <param name="timeout">Execution timeout in seconds. Set to <see cref="Timeout.Infinite"/> for no timeout.</param>
         /// <example>
         /// <code><![CDATA[
@@ -74,7 +74,7 @@
         /// <typeparam name="T">The expected return type.</typeparam>
         /// <param name="client">The Supabase client instance.</param>
         /// <param name="func">The database function name.</param>
-        /// <param name="ct">The cancellation token.</param>
+        /// <param name="ct">Cancels the waiting operation without necessarily aborting the underlying HTTP request. The Supabase RPC API (v8.13.0) does not expose a <see cref="CancellationToken"/> parameter. For actual HTTP request cancellation, configure <c>ClientOptions.Timeout</c> instead.</param>
         /// <param name="parameters">Dictionary of arguments for the RPC function.</param>
         /// <example>
         /// <code><![CDATA[
@@ -91,7 +91,7 @@
         /// <typeparam name="T">The expected return type.</typeparam>
         /// <param name="client">The Supabase client instance.</param>
         /// <param name="func">The database function name.</param>
-        /// <param name="ct">The cancellation token.</param>
+        /// <param name="ct">Cancels the waiting operation without necessarily aborting the underlying HTTP request. The Supabase RPC API (v8.13.0) does not expose a <see cref="CancellationToken"/> parameter. For actual HTTP request cancellation, configure <c>ClientOptions.Timeout</c> instead.</param>
         /// <param name="timeout">Execution timeout in seconds.</param>
         /// <param name="parameters">Dictionary of arguments for the RPC function.</param>
         /// <example>
@@ -149,7 +149,7 @@
         /// <typeparam name="T">The expected return type.</typeparam>
         /// <param name="client">The Supabase client instance.</param>
         /// <param name="func">The database function name.</param>
-        /// <param name="ct">The cancellation token.</param>
+        /// <param name="ct">Cancels the waiting operation without necessarily aborting the underlying HTTP request. The Supabase RPC API (v8.13.0) does not expose a <see cref="CancellationToken"/> parameter. For actual HTTP request cancellation, configure <c>ClientOptions.Timeout</c> instead.</param>
         /// <example>
         /// <code><![CDATA[
         /// var response = await SupabaseOP.ExecuteAsyncWithFullReturn<List<UserDto>>(client, "get_active_users", ct);
@@ -164,7 +164,7 @@
         /// <typeparam name="T">The expected return type.</typeparam>
         /// <param name="client">The Supabase client instance.</param>
         /// <param name="func">The database function name.</param>
-        /// <param name="ct">The cancellation token.</param>
+        /// <param name="ct">Cancels the waiting operation without necessarily aborting the underlying HTTP request. The Supabase RPC API (v8.13.0) does not expose a <see cref="CancellationToken"/> parameter. For actual HTTP request cancellation, configure <c>ClientOptions.Timeout</c> instead.</param>
         /// <param name="timeout">Execution timeout in seconds.</param>
         /// <example>
         /// <code><![CDATA[
@@ -180,7 +180,7 @@
         /// <typeparam name="T">The expected return type.</typeparam>
         /// <param name="client">The Supabase client instance.</param>
         /// <param name="func">The database function name.</param>
-        /// <param name="ct">The cancellation token.</param>
+        /// <param name="ct">Cancels the waiting operation without necessarily aborting the underlying HTTP request. The Supabase RPC API (v8.13.0) does not expose a <see cref="CancellationToken"/> parameter. For actual HTTP request cancellation, configure <c>ClientOptions.Timeout</c> instead.</param>
         /// <param name="parameters">A dictionary of arguments for the function.</param>
         /// <example>
         /// <code><![CDATA[
@@ -197,7 +197,7 @@
         /// <typeparam name="T">The expected return type.</typeparam>
         /// <param name="client">The Supabase client instance.</param>
         /// <param name="func">The database function name.</param>
-        /// <param name="ct">The cancellation token.</param>
+        /// <param name="ct">Cancels the waiting operation without necessarily aborting the underlying HTTP request. The Supabase RPC API (v8.13.0) does not expose a <see cref="CancellationToken"/> parameter. For actual HTTP request cancellation, configure <c>ClientOptions.Timeout</c> instead.</param>
         /// <param name="timeout">Execution timeout in seconds.</param>
         /// <param name="parameters">A dictionary of arguments for the function.</param>
         /// <example>
@@ -218,7 +218,7 @@
         /// will be used for each request unless overridden within individual <see cref="SupabaseDTO"/> objects.
         /// </summary>
         /// <param name="client">The global Supabase client for all requests.</param>
-        /// <param name="ct">The global cancellation token for the entire batch.</param>
+        /// <param name="ct">Cancels each waiting operation without necessarily aborting the underlying HTTP request. The Supabase RPC API (v8.13.0) does not expose a <see cref="CancellationToken"/> parameter. For actual HTTP request cancellation, configure <c>ClientOptions.Timeout</c> instead.</param>
         /// <param name="timeout">The global timeout in seconds for each request.</param>
         /// <param name="requests">A variable-length list of <see cref="SupabaseDTO"/> objects to execute.</param>
         /// <example>
@@ -237,7 +237,7 @@
         /// Executes a batch of RPC functions with a global client and cancellation token.
         /// </summary>
         /// <param name="client">The global Supabase client.</param>
-        /// <param name="ct">The global cancellation token.</param>
+        /// <param name="ct">Cancels each waiting operation without necessarily aborting the underlying HTTP request. The Supabase RPC API (v8.13.0) does not expose a <see cref="CancellationToken"/> parameter. For actual HTTP request cancellation, configure <c>ClientOptions.Timeout</c> instead.</param>
         /// <param name="requests">The list of RPC requests.</param>
         /// <example>
         /// <code><![CDATA[
@@ -271,7 +271,7 @@
         /// Executes a batch where each <see cref="SupabaseDTO"/> must contain its own client,
         /// governed by global cancellation and timeout settings.
         /// </summary>
-        /// <param name="ct">The global cancellation token.</param>
+        /// <param name="ct">Cancels each waiting operation without necessarily aborting the underlying HTTP request. The Supabase RPC API (v8.13.0) does not expose a <see cref="CancellationToken"/> parameter. For actual HTTP request cancellation, configure <c>ClientOptions.Timeout</c> instead.</param>
         /// <param name="timeout">Global timeout in seconds.</param>
         /// <param name="requests">The list of RPC requests.</param>
         public static async Task<List<ResultSupabaseDTO<object>>> ExecuteBatchAsync(
@@ -281,7 +281,7 @@
         /// <summary>
         /// Executes a batch with global cancellation support. Individual DTOs should handle their own client instances.
         /// </summary>
-        /// <param name="ct">The global cancellation token.</param>
+        /// <param name="ct">Cancels each waiting operation without necessarily aborting the underlying HTTP request. The Supabase RPC API (v8.13.0) does not expose a <see cref="CancellationToken"/> parameter. For actual HTTP request cancellation, configure <c>ClientOptions.Timeout</c> instead.</param>
         /// <param name="requests">The list of RPC requests.</param>
         public static async Task<List<ResultSupabaseDTO<object>>> ExecuteBatchAsync(
             CancellationToken ct, params SupabaseDTO[] requests)
@@ -327,7 +327,7 @@
         /// <para>Note: If an individual request fails, its corresponding entry in the list will be <c>null</c>.</para>
         /// </summary>
         /// <param name="client">The global Supabase client.</param>
-        /// <param name="ct">The global cancellation token.</param>
+        /// <param name="ct">Cancels each waiting operation without necessarily aborting the underlying HTTP request. The Supabase RPC API (v8.13.0) does not expose a <see cref="CancellationToken"/> parameter. For actual HTTP request cancellation, configure <c>ClientOptions.Timeout</c> instead.</param>
         /// <param name="timeout">Global timeout in seconds.</param>
         /// <param name="requests">A variable-length list of <see cref="SupabaseDTO"/> objects.</param>
         /// <example>
@@ -344,7 +344,7 @@
         /// Executes a batch of RPC functions with global client and cancellation support, returning results only.
         /// </summary>
         /// <param name="client">The global Supabase client.</param>
-        /// <param name="ct">The global cancellation token.</param>
+        /// <param name="ct">Cancels each waiting operation without necessarily aborting the underlying HTTP request. The Supabase RPC API (v8.13.0) does not expose a <see cref="CancellationToken"/> parameter. For actual HTTP request cancellation, configure <c>ClientOptions.Timeout</c> instead.</param>
         /// <param name="requests">The list of RPC requests.</param>
         public static async Task<List<object>> ExecuteBatchResultsOnlyAsync(
             Supabase.Client client, CancellationToken ct, params SupabaseDTO[] requests)
@@ -373,7 +373,7 @@
         /// Executes a batch with global cancellation and timeout settings, returning results only.
         /// Each DTO must specify its own client if not using a global one.
         /// </summary>
-        /// <param name="ct">The global cancellation token.</param>
+        /// <param name="ct">Cancels each waiting operation without necessarily aborting the underlying HTTP request. The Supabase RPC API (v8.13.0) does not expose a <see cref="CancellationToken"/> parameter. For actual HTTP request cancellation, configure <c>ClientOptions.Timeout</c> instead.</param>
         /// <param name="timeout">Global timeout in seconds.</param>
         /// <param name="requests">The list of RPC requests.</param>
         public static async Task<List<object>> ExecuteBatchResultsOnlyAsync(
@@ -383,7 +383,7 @@
         /// <summary>
         /// Executes a batch with global cancellation support, returning results only.
         /// </summary>
-        /// <param name="ct">The global cancellation token.</param>
+        /// <param name="ct">Cancels each waiting operation without necessarily aborting the underlying HTTP request. The Supabase RPC API (v8.13.0) does not expose a <see cref="CancellationToken"/> parameter. For actual HTTP request cancellation, configure <c>ClientOptions.Timeout</c> instead.</param>
         /// <param name="requests">The list of RPC requests.</param>
         public static async Task<List<object>> ExecuteBatchResultsOnlyAsync(
             CancellationToken ct, params SupabaseDTO[] requests)

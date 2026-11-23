@@ -5,6 +5,21 @@ using Supabase;
 
 namespace NeraXTools.Database_Operations.Cloud_Services.SupabaseOP;
 
+/*
+ * Cancellation behavior
+ * ----------------------
+ * CancellationToken is used here to cancel the waiting operation without
+ * necessarily aborting the underlying HTTP request. The Supabase RPC API
+ * (v8.13.0) does not expose a CancellationToken parameter, so the token is
+ * passed to Task.WaitAsync rather than to client.Rpc. Consequently, cancelling
+ * the token stops this method from waiting for the RPC result, but it does not
+ * guarantee that the HTTP request already started by the Supabase client is
+ * aborted.
+ *
+ * For actual HTTP request cancellation, configure ClientOptions.Timeout on
+ * the Supabase client. The timeout is enforced by the HTTP client and should
+ * be configured separately from the waiting-operation cancellation token.
+ */
 internal static class Supabase_Core
 {
     //=============================================== Core Execution Method ===============================================
@@ -55,7 +70,7 @@ internal static class Supabase_Core
     }
 
     //=============================================== Core_Main Execution Method ===============================================
-    private static async Task<T> ExecuteRpc_Core<T>(
+    private static async Task<T?> ExecuteRpc_Core<T>(
        Supabase.Client client,
        string functionName,
        CancellationToken ct,
@@ -74,7 +89,7 @@ internal static class Supabase_Core
             CancellationTokenSource? timeoutCts = null;
             //Combined CTS
             CancellationToken tokenToUse = ct;
-            if (timeOutFormSec != Timeout.Infinite && !ct.IsCancellationRequested)
+            if (timeOutFormSec != Timeout.Infinite && timeOutFormSec > 0 && !ct.IsCancellationRequested)
             {
                 timeoutCts = CancellationTokenSource.CreateLinkedTokenSource(ct);
                 timeoutCts.CancelAfter(TimeSpan.FromSeconds(timeOutFormSec));
@@ -84,8 +99,9 @@ internal static class Supabase_Core
             try
             {
                 var response = await rpcTask.WaitAsync(tokenToUse);
-
-                if (string.IsNullOrEmpty(response.Content)) return default;
+                // for more transparency, we don't provide a default value and throw an exception
+                if (string.IsNullOrWhiteSpace(response.Content))
+                    throw new InvalidOperationException($"RPC '{functionName}' returned an empty response.");
 
                 var options = new JsonSerializerOptions
                 {
