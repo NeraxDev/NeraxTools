@@ -245,7 +245,7 @@ internal static class Supabase_Core
 
     #region=============================================== Helper Methods ===============================================
 
-    private static T ConvertResult_Core<T>(object input, JsonSerializerOptions options)
+    private static T ConvertResult_Core<T>(object input, JsonSerializerOptions options = null)
     {
         if (input == null)
             return default;
